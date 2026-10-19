@@ -1,0 +1,564 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e01df34b0c4904b8bcb3aada49b597, type: 3}
+  m_Name: LanguageDatabase
+  m_EditorClassIdentifier: 
+  languages:
+  - EN
+  - VI
+  entries:
+  - key: menu.play
+    values:
+    - Play
+    - "Ch\u01A1i"
+  - key: menu.start
+    values:
+    - Start
+    - "B\u1EAFt \u0111\u1EA7u"
+  - key: menu.continue
+    values:
+    - Continue
+    - "Ti\u1EBFp t\u1EE5c"
+  - key: menu.resume
+    values:
+    - Resume
+    - "Ti\u1EBFp t\u1EE5c"
+  - key: menu.new_game
+    values:
+    - New Game
+    - "Ch\u01A1i m\u1EDBi"
+  - key: menu.restart
+    values:
+    - Restart
+    - "Ch\u01A1i l\u1EA1i"
+  - key: menu.retry
+    values:
+    - Retry
+    - "Th\u1EED l\u1EA1i"
+  - key: menu.next
+    values:
+    - Next
+    - "Ti\u1EBFp theo"
+  - key: menu.previous
+    values:
+    - Previous
+    - "Tr\u01B0\u1EDBc \u0111\xF3"
+  - key: menu.back
+    values:
+    - Back
+    - "Quay l\u1EA1i"
+  - key: menu.home
+    values:
+    - Home
+    - "Trang ch\u1EE7"
+  - key: menu.pause
+    values:
+    - Pause
+    - "T\u1EA1m d\u1EEBng"
+  - key: menu.quit
+    values:
+    - Quit
+    - "Tho\xE1t"
+  - key: menu.exit
+    values:
+    - Exit
+    - "Tho\xE1t"
+  - key: menu.settings
+    values:
+    - Settings
+    - "C\xE0i \u0111\u1EB7t"
+  - key: menu.credits
+    values:
+    - Credits
+    - "Th\xF4ng tin t\xE1c gi\u1EA3"
+  - key: menu.main_menu
+    values:
+    - Main Menu
+    - "Menu ch\xEDnh"
+  - key: menu.level_select
+    values:
+    - Select Level
+    - "Ch\u1ECDn m\xE0n ch\u01A1i"
+  - key: menu.more_games
+    values:
+    - More Games
+    - "Game kh\xE1c"
+  - key: menu.rate_us
+    values:
+    - Rate Us
+    - "\u0110\xE1nh gi\xE1"
+  - key: menu.share
+    values:
+    - Share
+    - "Chia s\u1EBB"
+  - key: menu.language
+    values:
+    - Language
+    - "Ng\xF4n ng\u1EEF"
+  - key: common.ok
+    values:
+    - OK
+    - OK
+  - key: common.yes
+    values:
+    - Yes
+    - "C\xF3"
+  - key: common.no
+    values:
+    - No
+    - "Kh\xF4ng"
+  - key: common.cancel
+    values:
+    - Cancel
+    - "H\u1EE7y"
+  - key: common.confirm
+    values:
+    - Confirm
+    - "X\xE1c nh\u1EADn"
+  - key: common.close
+    values:
+    - Close
+    - "\u0110\xF3ng"
+  - key: common.save
+    values:
+    - Save
+    - "L\u01B0u"
+  - key: common.load
+    values:
+    - Load
+    - "T\u1EA3i"
+  - key: common.delete
+    values:
+    - Delete
+    - "X\xF3a"
+  - key: common.apply
+    values:
+    - Apply
+    - "\xC1p d\u1EE5ng"
+  - key: common.reset
+    values:
+    - Reset
+    - "\u0110\u1EB7t l\u1EA1i"
+  - key: common.skip
+    values:
+    - Skip
+    - "B\u1ECF qua"
+  - key: common.done
+    values:
+    - Done
+    - Xong
+  - key: common.loading
+    values:
+    - Loading...
+    - "\u0110ang t\u1EA3i..."
+  - key: common.error
+    values:
+    - Error
+    - "L\u1ED7i"
+  - key: common.success
+    values:
+    - Success
+    - "Th\xE0nh c\xF4ng"
+  - key: common.warning
+    values:
+    - Warning
+    - "C\u1EA3nh b\xE1o"
+  - key: common.on
+    values:
+    - On
+    - "B\u1EADt"
+  - key: common.off
+    values:
+    - Off
+    - "T\u1EAFt"
+  - key: common.free
+    values:
+    - Free
+    - "Mi\u1EC5n ph\xED"
+  - key: common.buy
+    values:
+    - Buy
+    - Mua
+  - key: common.get
+    values:
+    - Get
+    - "Nh\u1EADn"
+  - key: common.claim
+    values:
+    - Claim
+    - "Nh\u1EADn th\u01B0\u1EDFng"
+  - key: common.select
+    values:
+    - Select
+    - "Ch\u1ECDn"
+  - key: common.equip
+    values:
+    - Equip
+    - "Trang b\u1ECB"
+  - key: common.equipped
+    values:
+    - Equipped
+    - "\u0110\xE3 trang b\u1ECB"
+  - key: common.upgrade
+    values:
+    - Upgrade
+    - "N\xE2ng c\u1EA5p"
+  - key: common.unlock
+    values:
+    - Unlock
+    - "M\u1EDF kh\xF3a"
+  - key: common.locked
+    values:
+    - Locked
+    - "\u0110\xE3 kh\xF3a"
+  - key: common.unlocked
+    values:
+    - Unlocked
+    - "\u0110\xE3 m\u1EDF kh\xF3a"
+  - key: common.max
+    values:
+    - Max
+    - "T\u1ED1i \u0111a"
+  - key: common.watch_ad
+    values:
+    - Watch Ad
+    - "Xem qu\u1EA3ng c\xE1o"
+  - key: settings.sound
+    values:
+    - Sound
+    - "\xC2m thanh"
+  - key: settings.music
+    values:
+    - Music
+    - "Nh\u1EA1c n\u1EC1n"
+  - key: settings.sfx
+    values:
+    - Sound Effects
+    - "Hi\u1EC7u \u1EE9ng \xE2m thanh"
+  - key: settings.volume
+    values:
+    - Volume
+    - "\xC2m l\u01B0\u1EE3ng"
+  - key: settings.vibration
+    values:
+    - Vibration
+    - Rung
+  - key: settings.graphics
+    values:
+    - Graphics
+    - "\u0110\u1ED3 h\u1ECDa"
+  - key: settings.quality
+    values:
+    - Quality
+    - "Ch\u1EA5t l\u01B0\u1EE3ng"
+  - key: settings.low
+    values:
+    - Low
+    - "Th\u1EA5p"
+  - key: settings.medium
+    values:
+    - Medium
+    - "Trung b\xECnh"
+  - key: settings.high
+    values:
+    - High
+    - Cao
+  - key: settings.controls
+    values:
+    - Controls
+    - "\u0110i\u1EC1u khi\u1EC3n"
+  - key: settings.notifications
+    values:
+    - Notifications
+    - "Th\xF4ng b\xE1o"
+  - key: settings.privacy
+    values:
+    - Privacy Policy
+    - "Ch\xEDnh s\xE1ch b\u1EA3o m\u1EADt"
+  - key: settings.terms
+    values:
+    - Terms of Service
+    - "\u0110i\u1EC1u kho\u1EA3n d\u1ECBch v\u1EE5"
+  - key: settings.version
+    values:
+    - Version {0}
+    - "Phi\xEAn b\u1EA3n {0}"
+  - key: hud.score
+    values:
+    - 'Score: {0}'
+    - "\u0110i\u1EC3m: {0}"
+  - key: hud.best_score
+    values:
+    - 'Best: {0}'
+    - "Cao nh\u1EA5t: {0}"
+  - key: hud.level
+    values:
+    - Level {0}
+    - "M\xE0n {0}"
+  - key: hud.time
+    values:
+    - Time
+    - "Th\u1EDDi gian"
+  - key: hud.coins
+    values:
+    - Coins
+    - Xu
+  - key: hud.gems
+    values:
+    - Gems
+    - "Kim c\u01B0\u01A1ng"
+  - key: hud.lives
+    values:
+    - Lives
+    - "M\u1EA1ng"
+  - key: hud.health
+    values:
+    - Health
+    - "M\xE1u"
+  - key: hud.energy
+    values:
+    - Energy
+    - "N\u0103ng l\u01B0\u1EE3ng"
+  - key: hud.stars
+    values:
+    - Stars
+    - Sao
+  - key: hud.combo
+    values:
+    - Combo x{0}
+    - Combo x{0}
+  - key: hud.round
+    values:
+    - Round {0}
+    - "V\xF2ng {0}"
+  - key: hud.wave
+    values:
+    - Wave {0}
+    - "\u0110\u1EE3t {0}"
+  - key: hud.rank
+    values:
+    - Rank
+    - "H\u1EA1ng"
+  - key: hud.xp
+    values:
+    - XP
+    - "Kinh nghi\u1EC7m"
+  - key: hud.attack
+    values:
+    - Attack
+    - "T\u1EA5n c\xF4ng"
+  - key: hud.defense
+    values:
+    - Defense
+    - "Ph\xF2ng th\u1EE7"
+  - key: hud.speed
+    values:
+    - Speed
+    - "T\u1ED1c \u0111\u1ED9"
+  - key: hud.damage
+    values:
+    - Damage
+    - "S\xE1t th\u01B0\u01A1ng"
+  - key: game.game_over
+    values:
+    - Game Over
+    - "Thua cu\u1ED9c"
+  - key: game.victory
+    values:
+    - Victory!
+    - "Chi\u1EBFn th\u1EAFng!"
+  - key: game.defeat
+    values:
+    - Defeat
+    - "Th\u1EA5t b\u1EA1i"
+  - key: game.you_win
+    values:
+    - You Win!
+    - "B\u1EA1n th\u1EAFng!"
+  - key: game.you_lose
+    values:
+    - You Lose
+    - "B\u1EA1n thua"
+  - key: game.new_record
+    values:
+    - New Record!
+    - "K\u1EF7 l\u1EE5c m\u1EDBi!"
+  - key: game.paused
+    values:
+    - Paused
+    - "\u0110\xE3 t\u1EA1m d\u1EEBng"
+  - key: game.ready
+    values:
+    - Ready?
+    - "S\u1EB5n s\xE0ng?"
+  - key: game.go
+    values:
+    - Go!
+    - "B\u1EAFt \u0111\u1EA7u!"
+  - key: game.level_complete
+    values:
+    - Level Complete!
+    - "Ho\xE0n th\xE0nh m\xE0n ch\u01A1i!"
+  - key: game.level_failed
+    values:
+    - Level Failed
+    - "Th\u1EA5t b\u1EA1i"
+  - key: game.tap_to_start
+    values:
+    - Tap to Start
+    - "Ch\u1EA1m \u0111\u1EC3 b\u1EAFt \u0111\u1EA7u"
+  - key: game.tap_to_continue
+    values:
+    - Tap to Continue
+    - "Ch\u1EA1m \u0111\u1EC3 ti\u1EBFp t\u1EE5c"
+  - key: game.try_again
+    values:
+    - Try Again
+    - "Th\u1EED l\u1EA1i"
+  - key: game.revive
+    values:
+    - Revive
+    - "H\u1ED3i sinh"
+  - key: game.bonus
+    values:
+    - Bonus
+    - "Th\u01B0\u1EDFng th\xEAm"
+  - key: game.reward
+    values:
+    - Reward
+    - "Ph\u1EA7n th\u01B0\u1EDFng"
+  - key: game.daily_reward
+    values:
+    - Daily Reward
+    - "Th\u01B0\u1EDFng h\u1EB1ng ng\xE0y"
+  - key: game.mission
+    values:
+    - Mission
+    - "Nhi\u1EC7m v\u1EE5"
+  - key: game.quest
+    values:
+    - Quest
+    - "Th\u1EED th\xE1ch"
+  - key: game.achievement
+    values:
+    - Achievements
+    - "Th\xE0nh t\u1EF1u"
+  - key: game.leaderboard
+    values:
+    - Leaderboard
+    - "B\u1EA3ng x\u1EBFp h\u1EA1ng"
+  - key: game.inventory
+    values:
+    - Inventory
+    - "Kho \u0111\u1ED3"
+  - key: game.shop
+    values:
+    - Shop
+    - "C\u1EEDa h\xE0ng"
+  - key: game.skin
+    values:
+    - Skin
+    - "Trang ph\u1EE5c"
+  - key: game.item
+    values:
+    - Item
+    - "V\u1EADt ph\u1EA9m"
+  - key: game.power_up
+    values:
+    - Power-up
+    - "V\u1EADt ph\u1EA9m h\u1ED7 tr\u1EE3"
+  - key: game.boost
+    values:
+    - Boost
+    - "T\u0103ng c\u01B0\u1EDDng"
+  - key: game.shield
+    values:
+    - Shield
+    - "Khi\xEAn"
+  - key: game.weapon
+    values:
+    - Weapon
+    - "V\u0169 kh\xED"
+  - key: game.character
+    values:
+    - Character
+    - "Nh\xE2n v\u1EADt"
+  - key: game.chest
+    values:
+    - Chest
+    - "R\u01B0\u01A1ng"
+  - key: game.key
+    values:
+    - Key
+    - "Ch\xECa kh\xF3a"
+  - key: game.hint
+    values:
+    - Hint
+    - "G\u1EE3i \xFD"
+  - key: game.tutorial
+    values:
+    - Tutorial
+    - "H\u01B0\u1EDBng d\u1EABn"
+  - key: msg.are_you_sure
+    values:
+    - Are you sure?
+    - "B\u1EA1n c\xF3 ch\u1EAFc kh\xF4ng?"
+  - key: msg.confirm_quit
+    values:
+    - Do you want to quit the game?
+    - "B\u1EA1n c\xF3 mu\u1ED1n tho\xE1t game kh\xF4ng?"
+  - key: msg.confirm_delete
+    values:
+    - Do you want to delete this?
+    - "B\u1EA1n c\xF3 mu\u1ED1n x\xF3a m\u1EE5c n\xE0y kh\xF4ng?"
+  - key: msg.not_enough_coins
+    values:
+    - Not enough coins
+    - "Kh\xF4ng \u0111\u1EE7 xu"
+  - key: msg.not_enough_gems
+    values:
+    - Not enough gems
+    - "Kh\xF4ng \u0111\u1EE7 kim c\u01B0\u01A1ng"
+  - key: msg.no_internet
+    values:
+    - No internet connection
+    - "Kh\xF4ng c\xF3 k\u1EBFt n\u1ED1i m\u1EA1ng"
+  - key: msg.purchase_success
+    values:
+    - Purchase successful!
+    - "Mua th\xE0nh c\xF4ng!"
+  - key: msg.purchase_failed
+    values:
+    - Purchase failed
+    - "Mua th\u1EA5t b\u1EA1i"
+  - key: msg.ad_not_ready
+    values:
+    - Ad is not ready. Please try again later.
+    - "Qu\u1EA3ng c\xE1o ch\u01B0a s\u1EB5n s\xE0ng. Vui l\xF2ng th\u1EED l\u1EA1i
+      sau."
+  - key: msg.reward_received
+    values:
+    - You received {0} {1}
+    - "B\u1EA1n nh\u1EADn \u0111\u01B0\u1EE3c {0} {1}"
+  - key: msg.progress_saved
+    values:
+    - Progress saved
+    - "\u0110\xE3 l\u01B0u ti\u1EBFn tr\xECnh"
+  - key: msg.welcome_back
+    values:
+    - Welcome back, {0}!
+    - "Ch\xE0o m\u1EEBng tr\u1EDF l\u1EA1i, {0}!"
+  sources:
+  - code: EN
+    json: {fileID: 4900000, guid: 112c0b36498911144951373d7b8aaba9, type: 3}
+  - code: VI
+    json: {fileID: 4900000, guid: 103aa5ff3930b8e4799872731ed1ab26, type: 3}

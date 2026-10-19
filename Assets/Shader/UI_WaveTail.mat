@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI_WaveTail
+  m_Shader: {fileID: 4800000, guid: c5484f45c55fbfc42a6686b4dadc9b87, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _USELOCALUV_ON
+  - _USEUNSCALEDTIME_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlongAmp: 0
+    - _Amp1: 0.2
+    - _Amp2: 0
+    - _Amp3: 0.21
+    - _Angle: 180
+    - _Aspect: 1
+    - _Chroma: 0.01
+    - _ChromaToggle: 0
+    - _ColorMask: 15
+    - _CrossFreq: 0.6
+    - _CrossSpeed: 0.4
+    - _Dissolve: 0
+    - _DissolveSoft: 0.5
+    - _EdgeSoftness: 0.05
+    - _EdgeWidth: 0.1
+    - _Freq1: 1.5
+    - _Freq2: 3.2
+    - _Freq3: 2
+    - _Highlight: 0.25
+    - _HighlightPower: 4
+    - _HueRange: 0
+    - _HueSpeed: 0
+    - _NoiseScale: 6
+    - _NoiseSpeed: 1.84
+    - _Phase1: 0
+    - _Phase2: 0.3
+    - _Phase3: 0.6
+    - _Pulse: 0
+    - _PulseSpeed: 1
+    - _Shading: 1
+    - _Sharp: 1.2
+    - _Speed1: 0.8
+    - _Speed2: 1
+    - _Speed3: 1
+    - _SpeedMul: 1.5
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _TailAlpha: 1
+    - _TailEnd: 1
+    - _TailPower: 2
+    - _TailStart: 0.5
+    - _TimeOffset: 0
+    - _UseLocalUV: 1
+    - _UseUIAlphaClip: 0
+    - _UseUnscaledTime: 1
+    - _Warp: 0
+    - _WaveType: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EdgeColor: {r: 1, g: 0.55, b: 0.1, a: 1}
+    - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TailColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []
