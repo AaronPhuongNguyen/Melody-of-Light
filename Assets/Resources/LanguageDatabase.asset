@@ -13,552 +13,2053 @@ MonoBehaviour:
   m_Name: LanguageDatabase
   m_EditorClassIdentifier: 
   languages:
-  - EN
   - VI
+  - EN
   entries:
   - key: menu.play
     values:
-    - Play
     - "Ch\u01A1i"
+    - Play
   - key: menu.start
     values:
-    - Start
     - "B\u1EAFt \u0111\u1EA7u"
+    - Start
   - key: menu.continue
     values:
-    - Continue
     - "Ti\u1EBFp t\u1EE5c"
+    - Continue
   - key: menu.resume
     values:
-    - Resume
     - "Ti\u1EBFp t\u1EE5c"
+    - Resume
   - key: menu.new_game
     values:
-    - New Game
     - "Ch\u01A1i m\u1EDBi"
+    - New Game
   - key: menu.restart
     values:
-    - Restart
     - "Ch\u01A1i l\u1EA1i"
+    - Restart
   - key: menu.retry
     values:
-    - Retry
     - "Th\u1EED l\u1EA1i"
+    - Retry
   - key: menu.next
     values:
-    - Next
     - "Ti\u1EBFp theo"
+    - Next
   - key: menu.previous
     values:
-    - Previous
     - "Tr\u01B0\u1EDBc \u0111\xF3"
+    - Previous
   - key: menu.back
     values:
-    - Back
     - "Quay l\u1EA1i"
+    - Back
   - key: menu.home
     values:
-    - Home
     - "Trang ch\u1EE7"
+    - Home
   - key: menu.pause
     values:
-    - Pause
     - "T\u1EA1m d\u1EEBng"
+    - Pause
   - key: menu.quit
     values:
-    - Quit
     - "Tho\xE1t"
+    - Quit
   - key: menu.exit
     values:
-    - Exit
     - "Tho\xE1t"
+    - Exit
   - key: menu.settings
     values:
-    - Settings
     - "C\xE0i \u0111\u1EB7t"
+    - Settings
   - key: menu.credits
     values:
-    - Credits
     - "Th\xF4ng tin t\xE1c gi\u1EA3"
+    - Credits
   - key: menu.main_menu
     values:
-    - Main Menu
     - "Menu ch\xEDnh"
+    - Main Menu
   - key: menu.level_select
     values:
-    - Select Level
     - "Ch\u1ECDn m\xE0n ch\u01A1i"
+    - Select Level
   - key: menu.more_games
     values:
-    - More Games
     - "Game kh\xE1c"
+    - More Games
   - key: menu.rate_us
     values:
-    - Rate Us
     - "\u0110\xE1nh gi\xE1"
+    - Rate Us
   - key: menu.share
     values:
-    - Share
     - "Chia s\u1EBB"
+    - Share
   - key: menu.language
     values:
-    - Language
     - "Ng\xF4n ng\u1EEF"
+    - Language
+  - key: menu.help
+    values:
+    - "Tr\u1EE3 gi\xFAp"
+    - Help
+  - key: menu.about
+    values:
+    - "Gi\u1EDBi thi\u1EC7u"
+    - About
+  - key: menu.options
+    values:
+    - "T\xF9y ch\u1ECDn"
+    - Options
+  - key: menu.feedback
+    values:
+    - "Ph\u1EA3n h\u1ED3i"
+    - Feedback
+  - key: menu.contact_us
+    values:
+    - "Li\xEAn h\u1EC7"
+    - Contact Us
   - key: common.ok
     values:
     - OK
     - OK
   - key: common.yes
     values:
-    - Yes
     - "C\xF3"
+    - Yes
   - key: common.no
     values:
-    - No
     - "Kh\xF4ng"
+    - No
   - key: common.cancel
     values:
-    - Cancel
     - "H\u1EE7y"
+    - Cancel
   - key: common.confirm
     values:
-    - Confirm
     - "X\xE1c nh\u1EADn"
+    - Confirm
   - key: common.close
     values:
-    - Close
     - "\u0110\xF3ng"
+    - Close
   - key: common.save
     values:
-    - Save
     - "L\u01B0u"
+    - Save
   - key: common.load
     values:
-    - Load
     - "T\u1EA3i"
+    - Load
   - key: common.delete
     values:
-    - Delete
     - "X\xF3a"
+    - Delete
   - key: common.apply
     values:
-    - Apply
     - "\xC1p d\u1EE5ng"
+    - Apply
   - key: common.reset
     values:
-    - Reset
     - "\u0110\u1EB7t l\u1EA1i"
+    - Reset
   - key: common.skip
     values:
-    - Skip
     - "B\u1ECF qua"
+    - Skip
   - key: common.done
     values:
-    - Done
     - Xong
+    - Done
   - key: common.loading
     values:
-    - Loading...
-    - "\u0110ang t\u1EA3i..."
+    - "\u0110ang t\u1EA3i"
+    - Loading
   - key: common.error
     values:
-    - Error
     - "L\u1ED7i"
+    - Error
   - key: common.success
     values:
-    - Success
     - "Th\xE0nh c\xF4ng"
+    - Success
   - key: common.warning
     values:
-    - Warning
     - "C\u1EA3nh b\xE1o"
+    - Warning
   - key: common.on
     values:
-    - On
     - "B\u1EADt"
+    - On
   - key: common.off
     values:
-    - Off
     - "T\u1EAFt"
+    - Off
   - key: common.free
     values:
-    - Free
     - "Mi\u1EC5n ph\xED"
+    - Free
   - key: common.buy
     values:
-    - Buy
     - Mua
+    - Buy
   - key: common.get
     values:
-    - Get
     - "Nh\u1EADn"
+    - Get
   - key: common.claim
     values:
-    - Claim
     - "Nh\u1EADn th\u01B0\u1EDFng"
+    - Claim
   - key: common.select
     values:
-    - Select
     - "Ch\u1ECDn"
+    - Select
   - key: common.equip
     values:
-    - Equip
     - "Trang b\u1ECB"
+    - Equip
   - key: common.equipped
     values:
-    - Equipped
     - "\u0110\xE3 trang b\u1ECB"
+    - Equipped
   - key: common.upgrade
     values:
-    - Upgrade
     - "N\xE2ng c\u1EA5p"
+    - Upgrade
   - key: common.unlock
     values:
-    - Unlock
     - "M\u1EDF kh\xF3a"
+    - Unlock
   - key: common.locked
     values:
-    - Locked
     - "\u0110\xE3 kh\xF3a"
+    - Locked
   - key: common.unlocked
     values:
-    - Unlocked
     - "\u0110\xE3 m\u1EDF kh\xF3a"
+    - Unlocked
   - key: common.max
     values:
-    - Max
     - "T\u1ED1i \u0111a"
+    - Max
   - key: common.watch_ad
     values:
-    - Watch Ad
     - "Xem qu\u1EA3ng c\xE1o"
+    - Watch Ad
+  - key: common.search
+    values:
+    - "T\xECm ki\u1EBFm"
+    - Search
+  - key: common.filter
+    values:
+    - "L\u1ECDc"
+    - Filter
+  - key: common.sort
+    values:
+    - "S\u1EAFp x\u1EBFp"
+    - Sort
+  - key: common.all
+    values:
+    - "T\u1EA5t c\u1EA3"
+    - All
+  - key: common.none
+    values:
+    - "Kh\xF4ng c\xF3"
+    - None
+  - key: common.new
+    values:
+    - "M\u1EDBi"
+    - New
+  - key: common.best
+    values:
+    - "T\u1ED1t nh\u1EA5t"
+    - Best
+  - key: common.more
+    values:
+    - "Th\xEAm"
+    - More
+  - key: common.details
+    values:
+    - "Chi ti\u1EBFt"
+    - Details
+  - key: common.info
+    values:
+    - "Th\xF4ng tin"
+    - Info
+  - key: common.edit
+    values:
+    - "Ch\u1EC9nh s\u1EEDa"
+    - Edit
+  - key: common.add
+    values:
+    - "Th\xEAm"
+    - Add
+  - key: common.remove
+    values:
+    - "G\u1EE1 b\u1ECF"
+    - Remove
+  - key: common.copy
+    values:
+    - "Sao ch\xE9p"
+    - Copy
+  - key: common.send
+    values:
+    - "G\u1EEDi"
+    - Send
+  - key: common.submit
+    values:
+    - "G\u1EEDi \u0111i"
+    - Submit
+  - key: common.enable
+    values:
+    - "B\u1EADt"
+    - Enable
+  - key: common.disable
+    values:
+    - "T\u1EAFt"
+    - Disable
+  - key: common.enabled
+    values:
+    - "\u0110\xE3 b\u1EADt"
+    - Enabled
+  - key: common.disabled
+    values:
+    - "\u0110\xE3 t\u1EAFt"
+    - Disabled
+  - key: common.open
+    values:
+    - "M\u1EDF"
+    - Open
+  - key: common.learn_more
+    values:
+    - "T\xECm hi\u1EC3u th\xEAm"
+    - Learn More
+  - key: common.see_all
+    values:
+    - "Xem t\u1EA5t c\u1EA3"
+    - See All
+  - key: common.got_it
+    values:
+    - "\u0110\xE3 hi\u1EC3u"
+    - Got it
+  - key: common.later
+    values:
+    - "\u0110\u1EC3 sau"
+    - Later
+  - key: common.unknown
+    values:
+    - "Kh\xF4ng r\xF5"
+    - Unknown
+  - key: common.empty
+    values:
+    - "Tr\u1ED1ng"
+    - Empty
+  - key: common.available
+    values:
+    - "C\xF3 s\u1EB5n"
+    - Available
+  - key: common.unavailable
+    values:
+    - "Kh\xF4ng kh\u1EA3 d\u1EE5ng"
+    - Unavailable
+  - key: common.full
+    values:
+    - "\u0110\u1EA7y"
+    - Full
+  - key: common.name
+    values:
+    - "T\xEAn"
+    - Name
+  - key: common.total
+    values:
+    - "T\u1ED5ng"
+    - Total
   - key: settings.sound
     values:
-    - Sound
     - "\xC2m thanh"
+    - Sound
   - key: settings.music
     values:
-    - Music
     - "Nh\u1EA1c n\u1EC1n"
+    - Music
   - key: settings.sfx
     values:
-    - Sound Effects
     - "Hi\u1EC7u \u1EE9ng \xE2m thanh"
+    - Sound Effects
   - key: settings.volume
     values:
-    - Volume
     - "\xC2m l\u01B0\u1EE3ng"
+    - Volume
   - key: settings.vibration
     values:
-    - Vibration
     - Rung
+    - Vibration
   - key: settings.graphics
     values:
-    - Graphics
     - "\u0110\u1ED3 h\u1ECDa"
+    - Graphics
   - key: settings.quality
     values:
-    - Quality
     - "Ch\u1EA5t l\u01B0\u1EE3ng"
+    - Quality
   - key: settings.low
     values:
-    - Low
     - "Th\u1EA5p"
+    - Low
   - key: settings.medium
     values:
-    - Medium
     - "Trung b\xECnh"
+    - Medium
   - key: settings.high
     values:
-    - High
     - Cao
+    - High
   - key: settings.controls
     values:
-    - Controls
     - "\u0110i\u1EC1u khi\u1EC3n"
+    - Controls
   - key: settings.notifications
     values:
-    - Notifications
     - "Th\xF4ng b\xE1o"
+    - Notifications
   - key: settings.privacy
     values:
-    - Privacy Policy
     - "Ch\xEDnh s\xE1ch b\u1EA3o m\u1EADt"
+    - Privacy Policy
   - key: settings.terms
     values:
-    - Terms of Service
     - "\u0110i\u1EC1u kho\u1EA3n d\u1ECBch v\u1EE5"
+    - Terms of Service
   - key: settings.version
     values:
-    - Version {0}
     - "Phi\xEAn b\u1EA3n {0}"
+    - Version {0}
+  - key: settings.account
+    values:
+    - "T\xE0i kho\u1EA3n"
+    - Account
+  - key: settings.data
+    values:
+    - "D\u1EEF li\u1EC7u"
+    - Data
+  - key: settings.sensitivity
+    values:
+    - "\u0110\u1ED9 nh\u1EA1y"
+    - Sensitivity
+  - key: settings.brightness
+    values:
+    - "\u0110\u1ED9 s\xE1ng"
+    - Brightness
+  - key: settings.fullscreen
+    values:
+    - "To\xE0n m\xE0n h\xECnh"
+    - Fullscreen
+  - key: settings.show_fps
+    values:
+    - "Hi\u1EC7n FPS"
+    - Show FPS
+  - key: settings.auto_save
+    values:
+    - "T\u1EF1 \u0111\u1ED9ng l\u01B0u"
+    - Auto Save
+  - key: settings.cloud_save
+    values:
+    - "L\u01B0u tr\xEAn \u0111\xE1m m\xE2y"
+    - Cloud Save
+  - key: settings.reset_progress
+    values:
+    - "X\xF3a ti\u1EBFn tr\xECnh"
+    - Reset Progress
+  - key: settings.delete_account
+    values:
+    - "X\xF3a t\xE0i kho\u1EA3n"
+    - Delete Account
+  - key: settings.restore_purchases
+    values:
+    - "Kh\xF4i ph\u1EE5c giao d\u1ECBch"
+    - Restore Purchases
+  - key: settings.dark_mode
+    values:
+    - "Ch\u1EBF \u0111\u1ED9 t\u1ED1i"
+    - Dark Mode
+  - key: settings.subtitles
+    values:
+    - "Ph\u1EE5 \u0111\u1EC1"
+    - Subtitles
+  - key: settings.check_updates
+    values:
+    - "Ki\u1EC3m tra c\u1EADp nh\u1EADt"
+    - Check for Updates
   - key: hud.score
     values:
-    - 'Score: {0}'
     - "\u0110i\u1EC3m: {0}"
+    - 'Score: {0}'
   - key: hud.best_score
     values:
-    - 'Best: {0}'
     - "Cao nh\u1EA5t: {0}"
+    - 'Best: {0}'
   - key: hud.level
     values:
-    - Level {0}
     - "M\xE0n {0}"
+    - Level {0}
   - key: hud.time
     values:
-    - Time
     - "Th\u1EDDi gian"
+    - Time
   - key: hud.coins
     values:
-    - Coins
     - Xu
+    - Coins
   - key: hud.gems
     values:
-    - Gems
     - "Kim c\u01B0\u01A1ng"
+    - Gems
   - key: hud.lives
     values:
-    - Lives
     - "M\u1EA1ng"
+    - Lives
   - key: hud.health
     values:
-    - Health
     - "M\xE1u"
+    - Health
   - key: hud.energy
     values:
-    - Energy
     - "N\u0103ng l\u01B0\u1EE3ng"
+    - Energy
   - key: hud.stars
     values:
-    - Stars
     - Sao
+    - Stars
   - key: hud.combo
     values:
     - Combo x{0}
     - Combo x{0}
   - key: hud.round
     values:
-    - Round {0}
     - "V\xF2ng {0}"
+    - Round {0}
   - key: hud.wave
     values:
-    - Wave {0}
     - "\u0110\u1EE3t {0}"
+    - Wave {0}
   - key: hud.rank
     values:
-    - Rank
     - "H\u1EA1ng"
+    - Rank
   - key: hud.xp
     values:
-    - XP
     - "Kinh nghi\u1EC7m"
+    - XP
   - key: hud.attack
     values:
-    - Attack
     - "T\u1EA5n c\xF4ng"
+    - Attack
   - key: hud.defense
     values:
-    - Defense
     - "Ph\xF2ng th\u1EE7"
+    - Defense
   - key: hud.speed
     values:
-    - Speed
     - "T\u1ED1c \u0111\u1ED9"
+    - Speed
   - key: hud.damage
     values:
-    - Damage
     - "S\xE1t th\u01B0\u01A1ng"
+    - Damage
+  - key: hud.mana
+    values:
+    - "N\u0103ng l\u01B0\u1EE3ng ph\xE9p"
+    - Mana
+  - key: hud.stamina
+    values:
+    - "Th\u1EC3 l\u1EF1c"
+    - Stamina
+  - key: hud.armor
+    values:
+    - "Gi\xE1p"
+    - Armor
+  - key: hud.ammo
+    values:
+    - "\u0110\u1EA1n"
+    - Ammo
+  - key: hud.kills
+    values:
+    - "H\u1EA1 g\u1EE5c"
+    - Kills
+  - key: hud.deaths
+    values:
+    - "T\u1EED vong"
+    - Deaths
+  - key: hud.wins
+    values:
+    - "Th\u1EAFng"
+    - Wins
+  - key: hud.losses
+    values:
+    - Thua
+    - Losses
+  - key: hud.streak
+    values:
+    - "Chu\u1ED7i th\u1EAFng"
+    - Streak
+  - key: hud.accuracy
+    values:
+    - "\u0110\u1ED9 ch\xEDnh x\xE1c"
+    - Accuracy
+  - key: hud.power
+    values:
+    - "S\u1EE9c m\u1EA1nh"
+    - Power
+  - key: hud.strength
+    values:
+    - "L\u1EF1c"
+    - Strength
+  - key: hud.agility
+    values:
+    - "Nhanh nh\u1EB9n"
+    - Agility
+  - key: hud.luck
+    values:
+    - "May m\u1EAFn"
+    - Luck
+  - key: hud.critical
+    values:
+    - "Ch\xED m\u1EA1ng"
+    - Critical
+  - key: hud.range
+    values:
+    - "T\u1EA7m \u0111\xE1nh"
+    - Range
+  - key: hud.cooldown
+    values:
+    - "H\u1ED3i chi\xEAu"
+    - Cooldown
+  - key: hud.distance
+    values:
+    - "Kho\u1EA3ng c\xE1ch"
+    - Distance
+  - key: hud.progress
+    values:
+    - "Ti\u1EBFn \u0111\u1ED9"
+    - Progress
+  - key: hud.goal
+    values:
+    - "M\u1EE5c ti\xEAu"
+    - Goal
+  - key: hud.moves
+    values:
+    - "L\u01B0\u1EE3t \u0111i: {0}"
+    - 'Moves: {0}'
+  - key: hud.points
+    values:
+    - "\u0110i\u1EC3m"
+    - Points
+  - key: hud.multiplier
+    values:
+    - "H\u1EC7 s\u1ED1 nh\xE2n"
+    - Multiplier
   - key: game.game_over
     values:
-    - Game Over
     - "Thua cu\u1ED9c"
+    - Game Over
   - key: game.victory
     values:
-    - Victory!
     - "Chi\u1EBFn th\u1EAFng!"
+    - Victory!
   - key: game.defeat
     values:
-    - Defeat
     - "Th\u1EA5t b\u1EA1i"
+    - Defeat
   - key: game.you_win
     values:
-    - You Win!
     - "B\u1EA1n th\u1EAFng!"
+    - You Win!
   - key: game.you_lose
     values:
-    - You Lose
     - "B\u1EA1n thua"
+    - You Lose
   - key: game.new_record
     values:
-    - New Record!
     - "K\u1EF7 l\u1EE5c m\u1EDBi!"
+    - New Record!
   - key: game.paused
     values:
-    - Paused
     - "\u0110\xE3 t\u1EA1m d\u1EEBng"
+    - Paused
   - key: game.ready
     values:
-    - Ready?
     - "S\u1EB5n s\xE0ng?"
+    - Ready?
   - key: game.go
     values:
-    - Go!
     - "B\u1EAFt \u0111\u1EA7u!"
+    - Go!
   - key: game.level_complete
     values:
-    - Level Complete!
     - "Ho\xE0n th\xE0nh m\xE0n ch\u01A1i!"
+    - Level Complete!
   - key: game.level_failed
     values:
-    - Level Failed
     - "Th\u1EA5t b\u1EA1i"
+    - Level Failed
   - key: game.tap_to_start
     values:
-    - Tap to Start
     - "Ch\u1EA1m \u0111\u1EC3 b\u1EAFt \u0111\u1EA7u"
+    - Tap to Start
   - key: game.tap_to_continue
     values:
-    - Tap to Continue
     - "Ch\u1EA1m \u0111\u1EC3 ti\u1EBFp t\u1EE5c"
+    - Tap to Continue
   - key: game.try_again
     values:
-    - Try Again
     - "Th\u1EED l\u1EA1i"
+    - Try Again
   - key: game.revive
     values:
-    - Revive
     - "H\u1ED3i sinh"
+    - Revive
   - key: game.bonus
     values:
-    - Bonus
     - "Th\u01B0\u1EDFng th\xEAm"
+    - Bonus
   - key: game.reward
     values:
-    - Reward
     - "Ph\u1EA7n th\u01B0\u1EDFng"
+    - Reward
   - key: game.daily_reward
     values:
-    - Daily Reward
     - "Th\u01B0\u1EDFng h\u1EB1ng ng\xE0y"
+    - Daily Reward
   - key: game.mission
     values:
-    - Mission
     - "Nhi\u1EC7m v\u1EE5"
+    - Mission
   - key: game.quest
     values:
-    - Quest
     - "Th\u1EED th\xE1ch"
+    - Quest
   - key: game.achievement
     values:
-    - Achievements
     - "Th\xE0nh t\u1EF1u"
+    - Achievements
   - key: game.leaderboard
     values:
-    - Leaderboard
     - "B\u1EA3ng x\u1EBFp h\u1EA1ng"
+    - Leaderboard
   - key: game.inventory
     values:
-    - Inventory
     - "Kho \u0111\u1ED3"
+    - Inventory
   - key: game.shop
     values:
-    - Shop
     - "C\u1EEDa h\xE0ng"
+    - Shop
   - key: game.skin
     values:
-    - Skin
     - "Trang ph\u1EE5c"
+    - Skin
   - key: game.item
     values:
-    - Item
     - "V\u1EADt ph\u1EA9m"
+    - Item
   - key: game.power_up
     values:
-    - Power-up
     - "V\u1EADt ph\u1EA9m h\u1ED7 tr\u1EE3"
+    - Power-up
   - key: game.boost
     values:
-    - Boost
     - "T\u0103ng c\u01B0\u1EDDng"
+    - Boost
   - key: game.shield
     values:
-    - Shield
     - "Khi\xEAn"
+    - Shield
   - key: game.weapon
     values:
-    - Weapon
     - "V\u0169 kh\xED"
+    - Weapon
   - key: game.character
     values:
-    - Character
     - "Nh\xE2n v\u1EADt"
+    - Character
   - key: game.chest
     values:
-    - Chest
     - "R\u01B0\u01A1ng"
+    - Chest
   - key: game.key
     values:
-    - Key
     - "Ch\xECa kh\xF3a"
+    - Key
   - key: game.hint
     values:
-    - Hint
     - "G\u1EE3i \xFD"
+    - Hint
   - key: game.tutorial
     values:
-    - Tutorial
     - "H\u01B0\u1EDBng d\u1EABn"
+    - Tutorial
+  - key: game.stage
+    values:
+    - "Ch\u1EB7ng {0}"
+    - Stage {0}
+  - key: game.chapter
+    values:
+    - "Ch\u01B0\u01A1ng {0}"
+    - Chapter {0}
+  - key: game.boss
+    values:
+    - "Tr\xF9m"
+    - Boss
+  - key: game.enemy
+    values:
+    - "K\u1EBB \u0111\u1ECBch"
+    - Enemy
+  - key: game.player
+    values:
+    - "Ng\u01B0\u1EDDi ch\u01A1i"
+    - Player
+  - key: game.player_n
+    values:
+    - "Ng\u01B0\u1EDDi ch\u01A1i {0}"
+    - Player {0}
+  - key: game.team
+    values:
+    - "\u0110\u1ED9i"
+    - Team
+  - key: game.your_turn
+    values:
+    - "L\u01B0\u1EE3t c\u1EE7a b\u1EA1n"
+    - Your Turn
+  - key: game.opponent_turn
+    values:
+    - "L\u01B0\u1EE3t \u0111\u1ED1i th\u1EE7"
+    - Opponent's Turn
+  - key: game.draw
+    values:
+    - "H\xF2a"
+    - Draw
+  - key: game.perfect
+    values:
+    - "Ho\xE0n h\u1EA3o!"
+    - Perfect!
+  - key: game.great
+    values:
+    - "Tuy\u1EC7t v\u1EDDi!"
+    - Great!
+  - key: game.good
+    values:
+    - "T\u1ED1t!"
+    - Good!
+  - key: game.miss
+    values:
+    - "Tr\u01B0\u1EE3t"
+    - Miss
+  - key: game.nice
+    values:
+    - "\u0110\u1EB9p l\u1EAFm!"
+    - Nice!
+  - key: game.awesome
+    values:
+    - "Qu\xE1 \u0111\u1EC9nh!"
+    - Awesome!
+  - key: game.amazing
+    values:
+    - "Si\xEAu ph\xE0m!"
+    - Amazing!
+  - key: game.checkpoint
+    values:
+    - "\u0110i\u1EC3m l\u01B0u"
+    - Checkpoint
+  - key: game.respawn
+    values:
+    - "H\u1ED3i sinh t\u1EA1i ch\u1ED7"
+    - Respawn
+  - key: game.double_reward
+    values:
+    - "Nh\xE2n \u0111\xF4i th\u01B0\u1EDFng"
+    - Double Reward
+  - key: game.free_gift
+    values:
+    - "Qu\xE0 mi\u1EC5n ph\xED"
+    - Free Gift
+  - key: game.lucky_spin
+    values:
+    - "V\xF2ng quay may m\u1EAFn"
+    - Lucky Spin
+  - key: game.jackpot
+    values:
+    - "Tr\xFAng l\u1EDBn!"
+    - Jackpot!
+  - key: game.mystery_box
+    values:
+    - "H\u1ED9p b\xED \u1EA9n"
+    - Mystery Box
+  - key: game.treasure
+    values:
+    - "Kho b\xE1u"
+    - Treasure
+  - key: game.map
+    values:
+    - "B\u1EA3n \u0111\u1ED3"
+    - Map
+  - key: game.world
+    values:
+    - "Th\u1EBF gi\u1EDBi"
+    - World
+  - key: game.level_up
+    values:
+    - "L\xEAn c\u1EA5p!"
+    - Level Up!
+  - key: game.new_item
+    values:
+    - "V\u1EADt ph\u1EA9m m\u1EDBi!"
+    - New Item!
+  - key: game.congratulations
+    values:
+    - "Ch\xFAc m\u1EEBng!"
+    - Congratulations!
+  - key: game.well_done
+    values:
+    - "L\xE0m t\u1ED1t l\u1EAFm!"
+    - Well Done!
+  - key: status.loading
+    values:
+    - "\u0110ang t\u1EA3i..."
+    - Loading...
+  - key: status.playing
+    values:
+    - "\u0110ang ch\u01A1i"
+    - Playing
+  - key: status.saving
+    values:
+    - "\u0110ang l\u01B0u..."
+    - Saving...
+  - key: status.connecting
+    values:
+    - "\u0110ang k\u1EBFt n\u1ED1i..."
+    - Connecting...
+  - key: status.reconnecting
+    values:
+    - "\u0110ang k\u1EBFt n\u1ED1i l\u1EA1i..."
+    - Reconnecting...
+  - key: status.searching
+    values:
+    - "\u0110ang t\xECm ki\u1EBFm..."
+    - Searching...
+  - key: status.downloading
+    values:
+    - "\u0110ang t\u1EA3i xu\u1ED1ng..."
+    - Downloading...
+  - key: status.uploading
+    values:
+    - "\u0110ang t\u1EA3i l\xEAn..."
+    - Uploading...
+  - key: status.updating
+    values:
+    - "\u0110ang c\u1EADp nh\u1EADt..."
+    - Updating...
+  - key: status.installing
+    values:
+    - "\u0110ang c\xE0i \u0111\u1EB7t..."
+    - Installing...
+  - key: status.waiting
+    values:
+    - "\u0110ang ch\u1EDD..."
+    - Waiting...
+  - key: status.syncing
+    values:
+    - "\u0110ang \u0111\u1ED3ng b\u1ED9..."
+    - Syncing...
+  - key: status.restoring
+    values:
+    - "\u0110ang kh\xF4i ph\u1EE5c..."
+    - Restoring...
+  - key: status.purchasing
+    values:
+    - "\u0110ang mua..."
+    - Purchasing...
+  - key: status.processing
+    values:
+    - "\u0110ang x\u1EED l\xFD..."
+    - Processing...
+  - key: status.signing_in
+    values:
+    - "\u0110ang \u0111\u0103ng nh\u1EADp..."
+    - Signing in...
+  - key: status.signing_out
+    values:
+    - "\u0110ang \u0111\u0103ng xu\u1EA5t..."
+    - Signing out...
+  - key: status.matching
+    values:
+    - "\u0110ang t\xECm tr\u1EADn..."
+    - Finding a match...
+  - key: status.generating
+    values:
+    - "\u0110ang t\u1EA1o..."
+    - Generating...
+  - key: status.preparing
+    values:
+    - "\u0110ang chu\u1EA9n b\u1ECB..."
+    - Preparing...
+  - key: status.starting
+    values:
+    - "\u0110ang b\u1EAFt \u0111\u1EA7u..."
+    - Starting...
+  - key: status.pausing
+    values:
+    - "\u0110ang t\u1EA1m d\u1EEBng..."
+    - Pausing...
+  - key: status.resuming
+    values:
+    - "\u0110ang ti\u1EBFp t\u1EE5c..."
+    - Resuming...
+  - key: status.restarting
+    values:
+    - "\u0110ang ch\u01A1i l\u1EA1i..."
+    - Restarting...
+  - key: status.exiting
+    values:
+    - "\u0110ang tho\xE1t..."
+    - Exiting...
+  - key: status.running
+    values:
+    - "\u0110ang ch\u1EA1y"
+    - Running
+  - key: status.jumping
+    values:
+    - "\u0110ang nh\u1EA3y"
+    - Jumping
+  - key: status.walking
+    values:
+    - "\u0110ang \u0111i b\u1ED9"
+    - Walking
+  - key: status.attacking
+    values:
+    - "\u0110ang t\u1EA5n c\xF4ng"
+    - Attacking
+  - key: status.defending
+    values:
+    - "\u0110ang ph\xF2ng th\u1EE7"
+    - Defending
+  - key: status.fighting
+    values:
+    - "\u0110ang chi\u1EBFn \u0111\u1EA5u"
+    - Fighting
+  - key: status.collecting
+    values:
+    - "\u0110ang thu th\u1EADp"
+    - Collecting
+  - key: status.building
+    values:
+    - "\u0110ang x\xE2y d\u1EF1ng"
+    - Building
+  - key: status.crafting
+    values:
+    - "\u0110ang ch\u1EBF t\u1EA1o"
+    - Crafting
+  - key: status.upgrading
+    values:
+    - "\u0110ang n\xE2ng c\u1EA5p"
+    - Upgrading
+  - key: status.unlocking
+    values:
+    - "\u0110ang m\u1EDF kh\xF3a"
+    - Unlocking
+  - key: status.spawning
+    values:
+    - "\u0110ang xu\u1EA5t hi\u1EC7n"
+    - Spawning
+  - key: status.respawning
+    values:
+    - "\u0110ang h\u1ED3i sinh"
+    - Respawning
+  - key: status.reviving
+    values:
+    - "\u0110ang c\u1EE9u s\u1ED1ng"
+    - Reviving
+  - key: status.charging
+    values:
+    - "\u0110ang n\u1EA1p n\u0103ng l\u01B0\u1EE3ng"
+    - Charging
+  - key: status.reloading
+    values:
+    - "\u0110ang n\u1EA1p \u0111\u1EA1n"
+    - Reloading
+  - key: status.aiming
+    values:
+    - "\u0110ang ng\u1EAFm"
+    - Aiming
+  - key: status.shooting
+    values:
+    - "\u0110ang b\u1EAFn"
+    - Shooting
+  - key: status.flying
+    values:
+    - "\u0110ang bay"
+    - Flying
+  - key: status.swimming
+    values:
+    - "\u0110ang b\u01A1i"
+    - Swimming
+  - key: status.climbing
+    values:
+    - "\u0110ang leo"
+    - Climbing
+  - key: status.falling
+    values:
+    - "\u0110ang r\u01A1i"
+    - Falling
+  - key: status.healing
+    values:
+    - "\u0110ang h\u1ED3i m\xE1u"
+    - Healing
+  - key: status.casting
+    values:
+    - "\u0110ang ni\u1EC7m ph\xE9p"
+    - Casting
+  - key: status.mining
+    values:
+    - "\u0110ang khai th\xE1c"
+    - Mining
+  - key: status.farming
+    values:
+    - "\u0110ang tr\u1ED3ng tr\u1ECDt"
+    - Farming
+  - key: status.training
+    values:
+    - "\u0110ang luy\u1EC7n t\u1EADp"
+    - Training
+  - key: status.exploring
+    values:
+    - "\u0110ang kh\xE1m ph\xE1"
+    - Exploring
+  - key: status.racing
+    values:
+    - "\u0110ang \u0111ua"
+    - Racing
+  - key: status.drawing
+    values:
+    - "\u0110ang v\u1EBD"
+    - Drawing
+  - key: status.winning
+    values:
+    - "\u0110ang d\u1EABn tr\u01B0\u1EDBc"
+    - Winning
+  - key: status.losing
+    values:
+    - "\u0110ang b\u1ECB d\u1EABn"
+    - Losing
+  - key: status.checking
+    values:
+    - "\u0110ang ki\u1EC3m tra..."
+    - Checking...
+  - key: status.verifying
+    values:
+    - "\u0110ang x\xE1c minh..."
+    - Verifying...
+  - key: status.sending
+    values:
+    - "\u0110ang g\u1EEDi..."
+    - Sending...
+  - key: status.receiving
+    values:
+    - "\u0110ang nh\u1EADn..."
+    - Receiving...
+  - key: status.joining
+    values:
+    - "\u0110ang tham gia..."
+    - Joining...
+  - key: status.creating
+    values:
+    - "\u0110ang t\u1EA1o..."
+    - Creating...
+  - key: status.deleting
+    values:
+    - "\u0110ang x\xF3a..."
+    - Deleting...
+  - key: status.watching_ad
+    values:
+    - "\u0110ang xem qu\u1EA3ng c\xE1o..."
+    - Watching Ad...
+  - key: action.jump
+    values:
+    - "Nh\u1EA3y"
+    - Jump
+  - key: action.run
+    values:
+    - "Ch\u1EA1y"
+    - Run
+  - key: action.walk
+    values:
+    - "\u0110i b\u1ED9"
+    - Walk
+  - key: action.attack
+    values:
+    - "T\u1EA5n c\xF4ng"
+    - Attack
+  - key: action.defend
+    values:
+    - "Ph\xF2ng th\u1EE7"
+    - Defend
+  - key: action.shoot
+    values:
+    - "B\u1EAFn"
+    - Shoot
+  - key: action.aim
+    values:
+    - "Ng\u1EAFm"
+    - Aim
+  - key: action.reload
+    values:
+    - "N\u1EA1p \u0111\u1EA1n"
+    - Reload
+  - key: action.heal
+    values:
+    - "H\u1ED3i m\xE1u"
+    - Heal
+  - key: action.cast
+    values:
+    - "Ni\u1EC7m ph\xE9p"
+    - Cast
+  - key: action.collect
+    values:
+    - "Thu th\u1EADp"
+    - Collect
+  - key: action.build
+    values:
+    - "X\xE2y d\u1EF1ng"
+    - Build
+  - key: action.craft
+    values:
+    - "Ch\u1EBF t\u1EA1o"
+    - Craft
+  - key: action.mine
+    values:
+    - "Khai th\xE1c"
+    - Mine
+  - key: action.sell
+    values:
+    - "B\xE1n"
+    - Sell
+  - key: action.trade
+    values:
+    - "Trao \u0111\u1ED5i"
+    - Trade
+  - key: action.fight
+    values:
+    - "Chi\u1EBFn \u0111\u1EA5u"
+    - Fight
+  - key: action.dodge
+    values:
+    - "N\xE9"
+    - Dodge
+  - key: action.block
+    values:
+    - "\u0110\u1EE1"
+    - Block
+  - key: action.move
+    values:
+    - "Di chuy\u1EC3n"
+    - Move
+  - key: action.rotate
+    values:
+    - Xoay
+    - Rotate
+  - key: action.swipe
+    values:
+    - "Vu\u1ED1t"
+    - Swipe
+  - key: action.tap
+    values:
+    - "Ch\u1EA1m"
+    - Tap
+  - key: action.hold
+    values:
+    - "Gi\u1EEF"
+    - Hold
+  - key: action.drag
+    values:
+    - "K\xE9o"
+    - Drag
+  - key: action.drop
+    values:
+    - "Th\u1EA3"
+    - Drop
+  - key: action.throw
+    values:
+    - "N\xE9m"
+    - Throw
+  - key: action.catch
+    values:
+    - "B\u1EAFt"
+    - Catch
+  - key: action.pick_up
+    values:
+    - "Nh\u1EB7t"
+    - Pick Up
+  - key: action.use
+    values:
+    - "D\xF9ng"
+    - Use
+  - key: action.repair
+    values:
+    - "S\u1EEDa ch\u1EEFa"
+    - Repair
+  - key: action.train
+    values:
+    - "Luy\u1EC7n t\u1EADp"
+    - Train
+  - key: action.explore
+    values:
+    - "Kh\xE1m ph\xE1"
+    - Explore
+  - key: action.rest
+    values:
+    - "Ngh\u1EC9 ng\u01A1i"
+    - Rest
+  - key: action.summon
+    values:
+    - "Tri\u1EC7u h\u1ED3i"
+    - Summon
+  - key: social.friends
+    values:
+    - "B\u1EA1n b\xE8"
+    - Friends
+  - key: social.add_friend
+    values:
+    - "K\u1EBFt b\u1EA1n"
+    - Add Friend
+  - key: social.remove_friend
+    values:
+    - "X\xF3a b\u1EA1n"
+    - Remove Friend
+  - key: social.invite
+    values:
+    - "M\u1EDDi"
+    - Invite
+  - key: social.invite_friends
+    values:
+    - "M\u1EDDi b\u1EA1n b\xE8"
+    - Invite Friends
+  - key: social.chat
+    values:
+    - "Tr\xF2 chuy\u1EC7n"
+    - Chat
+  - key: social.message
+    values:
+    - "Tin nh\u1EAFn"
+    - Message
+  - key: social.profile
+    values:
+    - "H\u1ED3 s\u01A1"
+    - Profile
+  - key: social.username
+    values:
+    - "T\xEAn \u0111\u0103ng nh\u1EADp"
+    - Username
+  - key: social.nickname
+    values:
+    - "Bi\u1EC7t danh"
+    - Nickname
+  - key: social.enter_name
+    values:
+    - "Nh\u1EADp t\xEAn c\u1EE7a b\u1EA1n"
+    - Enter your name
+  - key: social.avatar
+    values:
+    - "\u1EA2nh \u0111\u1EA1i di\u1EC7n"
+    - Avatar
+  - key: social.guild
+    values:
+    - "Bang h\u1ED9i"
+    - Guild
+  - key: social.online
+    values:
+    - "Tr\u1EF1c tuy\u1EBFn"
+    - Online
+  - key: social.offline
+    values:
+    - "Ngo\u1EA1i tuy\u1EBFn"
+    - Offline
+  - key: social.join
+    values:
+    - Tham gia
+    - Join
+  - key: social.leave
+    values:
+    - "R\u1EDDi \u0111i"
+    - Leave
+  - key: social.create_room
+    values:
+    - "T\u1EA1o ph\xF2ng"
+    - Create Room
+  - key: social.join_room
+    values:
+    - "V\xE0o ph\xF2ng"
+    - Join Room
+  - key: social.room
+    values:
+    - "Ph\xF2ng"
+    - Room
+  - key: social.lobby
+    values:
+    - "S\u1EA3nh ch\u1EDD"
+    - Lobby
+  - key: social.ranking
+    values:
+    - "X\u1EBFp h\u1EA1ng"
+    - Ranking
+  - key: social.global
+    values:
+    - "To\xE0n c\u1EA7u"
+    - Global
+  - key: social.weekly
+    values:
+    - "H\u1EB1ng tu\u1EA7n"
+    - Weekly
+  - key: social.monthly
+    values:
+    - "H\u1EB1ng th\xE1ng"
+    - Monthly
+  - key: social.all_time
+    values:
+    - "M\u1ECDi th\u1EDDi \u0111\u1EA1i"
+    - All Time
+  - key: shop.price
+    values:
+    - "Gi\xE1"
+    - Price
+  - key: shop.discount
+    values:
+    - "Gi\u1EA3m gi\xE1"
+    - Discount
+  - key: shop.sale
+    values:
+    - "Khuy\u1EBFn m\xE3i"
+    - Sale
+  - key: shop.buy_now
+    values:
+    - Mua ngay
+    - Buy Now
+  - key: shop.remove_ads
+    values:
+    - "X\xF3a qu\u1EA3ng c\xE1o"
+    - Remove Ads
+  - key: shop.premium
+    values:
+    - "Cao c\u1EA5p"
+    - Premium
+  - key: shop.vip
+    values:
+    - VIP
+    - VIP
+  - key: shop.pack
+    values:
+    - "G\xF3i"
+    - Pack
+  - key: shop.starter_pack
+    values:
+    - "G\xF3i kh\u1EDFi \u0111\u1EA7u"
+    - Starter Pack
+  - key: shop.bundle
+    values:
+    - "G\xF3i combo"
+    - Bundle
+  - key: shop.limited_offer
+    values:
+    - "\u01AFu \u0111\xE3i c\xF3 h\u1EA1n"
+    - Limited Offer
+  - key: shop.best_value
+    values:
+    - "Gi\xE1 tr\u1ECB nh\u1EA5t"
+    - Best Value
+  - key: shop.most_popular
+    values:
+    - "Ph\u1ED5 bi\u1EBFn nh\u1EA5t"
+    - Most Popular
+  - key: shop.special_offer
+    values:
+    - "\u01AFu \u0111\xE3i \u0111\u1EB7c bi\u1EC7t"
+    - Special Offer
+  - key: shop.daily_deal
+    values:
+    - "\u01AFu \u0111\xE3i h\u1EB1ng ng\xE0y"
+    - Daily Deal
+  - key: shop.free_coins
+    values:
+    - "Xu mi\u1EC5n ph\xED"
+    - Free Coins
+  - key: shop.free_gems
+    values:
+    - "Kim c\u01B0\u01A1ng mi\u1EC5n ph\xED"
+    - Free Gems
+  - key: shop.out_of_stock
+    values:
+    - "H\u1EBFt h\xE0ng"
+    - Out of Stock
+  - key: shop.owned
+    values:
+    - "\u0110\xE3 s\u1EDF h\u1EEFu"
+    - Owned
+  - key: shop.purchased
+    values:
+    - "\u0110\xE3 mua"
+    - Purchased
+  - key: shop.purchase
+    values:
+    - "Mua h\xE0ng"
+    - Purchase
+  - key: shop.cost
+    values:
+    - "Chi ph\xED"
+    - Cost
+  - key: shop.subscribe
+    values:
+    - "\u0110\u0103ng k\xFD"
+    - Subscribe
+  - key: shop.trial
+    values:
+    - "D\xF9ng th\u1EED mi\u1EC5n ph\xED"
+    - Free Trial
+  - key: shop.gift
+    values:
+    - "Qu\xE0 t\u1EB7ng"
+    - Gift
+  - key: shop.redeem
+    values:
+    - "\u0110\u1ED5i m\xE3"
+    - Redeem
+  - key: shop.promo_code
+    values:
+    - "M\xE3 khuy\u1EBFn m\xE3i"
+    - Promo Code
+  - key: shop.enter_code
+    values:
+    - "Nh\u1EADp m\xE3"
+    - Enter code
+  - key: mode.single_player
+    values:
+    - "M\u1ED9t ng\u01B0\u1EDDi ch\u01A1i"
+    - Single Player
+  - key: mode.multiplayer
+    values:
+    - "Nhi\u1EC1u ng\u01B0\u1EDDi ch\u01A1i"
+    - Multiplayer
+  - key: mode.online_mode
+    values:
+    - "Tr\u1EF1c tuy\u1EBFn"
+    - Online
+  - key: mode.offline_mode
+    values:
+    - "Ngo\u1EA1i tuy\u1EBFn"
+    - Offline
+  - key: mode.difficulty
+    values:
+    - "\u0110\u1ED9 kh\xF3"
+    - Difficulty
+  - key: mode.easy
+    values:
+    - "D\u1EC5"
+    - Easy
+  - key: mode.normal
+    values:
+    - "Th\u01B0\u1EDDng"
+    - Normal
+  - key: mode.hard
+    values:
+    - "Kh\xF3"
+    - Hard
+  - key: mode.expert
+    values:
+    - "Chuy\xEAn gia"
+    - Expert
+  - key: mode.endless
+    values:
+    - "V\xF4 t\u1EADn"
+    - Endless
+  - key: mode.campaign
+    values:
+    - "Chi\u1EBFn d\u1ECBch"
+    - Campaign
+  - key: mode.versus
+    values:
+    - "\u0110\u1ED1i kh\xE1ng"
+    - Versus
+  - key: mode.practice
+    values:
+    - "Luy\u1EC7n t\u1EADp"
+    - Practice
+  - key: mode.challenge
+    values:
+    - "Th\u1EED th\xE1ch"
+    - Challenge
+  - key: mode.time_attack
+    values:
+    - "\u0110ua th\u1EDDi gian"
+    - Time Attack
+  - key: mode.survival
+    values:
+    - "Sinh t\u1ED3n"
+    - Survival
+  - key: mode.sandbox
+    values:
+    - "T\u1EF1 do"
+    - Sandbox
+  - key: mode.custom
+    values:
+    - "T\xF9y ch\u1EC9nh"
+    - Custom
+  - key: mode.random
+    values:
+    - "Ng\u1EABu nhi\xEAn"
+    - Random
+  - key: mode.auto
+    values:
+    - "T\u1EF1 \u0111\u1ED9ng"
+    - Auto
+  - key: mode.classic
+    values:
+    - "C\u1ED5 \u0111i\u1EC3n"
+    - Classic
+  - key: mode.story
+    values:
+    - "C\u1ED1t truy\u1EC7n"
+    - Story
+  - key: mode.co_op
+    values:
+    - "H\u1EE3p t\xE1c"
+    - Co-op
+  - key: time.second
+    values:
+    - "gi\xE2y"
+    - second
+  - key: time.seconds
+    values:
+    - "gi\xE2y"
+    - seconds
+  - key: time.minute
+    values:
+    - "ph\xFAt"
+    - minute
+  - key: time.minutes
+    values:
+    - "ph\xFAt"
+    - minutes
+  - key: time.hour
+    values:
+    - "gi\u1EDD"
+    - hour
+  - key: time.hours
+    values:
+    - "gi\u1EDD"
+    - hours
+  - key: time.day
+    values:
+    - "ng\xE0y"
+    - day
+  - key: time.days
+    values:
+    - "ng\xE0y"
+    - days
+  - key: time.today
+    values:
+    - "H\xF4m nay"
+    - Today
+  - key: time.yesterday
+    values:
+    - "H\xF4m qua"
+    - Yesterday
+  - key: time.tomorrow
+    values:
+    - "Ng\xE0y mai"
+    - Tomorrow
+  - key: time.now
+    values:
+    - "B\xE2y gi\u1EDD"
+    - Now
+  - key: time.soon
+    values:
+    - "S\u1EAFp t\u1EDBi"
+    - Soon
+  - key: time.remaining
+    values:
+    - "C\xF2n l\u1EA1i"
+    - Remaining
+  - key: time.time_left
+    values:
+    - "C\xF2n l\u1EA1i: {0}"
+    - 'Time left: {0}'
+  - key: time.time_up
+    values:
+    - "H\u1EBFt gi\u1EDD!"
+    - Time's up!
+  - key: time.countdown
+    values:
+    - "B\u1EAFt \u0111\u1EA7u sau {0}"
+    - Starting in {0}
+  - key: time.ends_in
+    values:
+    - "K\u1EBFt th\xFAc sau {0}"
+    - Ends in {0}
+  - key: time.next_reward_in
+    values:
+    - "Qu\xE0 ti\u1EBFp theo sau {0}"
+    - Next reward in {0}
+  - key: time.come_back_tomorrow
+    values:
+    - "Ng\xE0y mai quay l\u1EA1i nh\xE9!"
+    - Come back tomorrow!
+  - key: time.daily
+    values:
+    - "H\u1EB1ng ng\xE0y"
+    - Daily
+  - key: direction.up
+    values:
+    - "L\xEAn"
+    - Up
+  - key: direction.down
+    values:
+    - "Xu\u1ED1ng"
+    - Down
+  - key: direction.left
+    values:
+    - "Tr\xE1i"
+    - Left
+  - key: direction.right
+    values:
+    - "Ph\u1EA3i"
+    - Right
+  - key: direction.forward
+    values:
+    - "Ti\u1EBFn"
+    - Forward
+  - key: direction.backward
+    values:
+    - "L\xF9i"
+    - Backward
+  - key: direction.center
+    values:
+    - "Gi\u1EEFa"
+    - Center
+  - key: direction.top
+    values:
+    - "Tr\xEAn c\xF9ng"
+    - Top
+  - key: rarity.common
+    values:
+    - "Th\u01B0\u1EDDng"
+    - Common
+  - key: rarity.uncommon
+    values:
+    - "Kh\xE1 hi\u1EBFm"
+    - Uncommon
+  - key: rarity.rare
+    values:
+    - "Hi\u1EBFm"
+    - Rare
+  - key: rarity.epic
+    values:
+    - "S\u1EED thi"
+    - Epic
+  - key: rarity.legendary
+    values:
+    - "Huy\u1EC1n tho\u1EA1i"
+    - Legendary
+  - key: rarity.mythic
+    values:
+    - "Th\u1EA7n tho\u1EA1i"
+    - Mythic
+  - key: items.sword
+    values:
+    - "Ki\u1EBFm"
+    - Sword
+  - key: items.bow
+    values:
+    - Cung
+    - Bow
+  - key: items.axe
+    values:
+    - "R\xECu"
+    - Axe
+  - key: items.spear
+    values:
+    - "Gi\xE1o"
+    - Spear
+  - key: items.gun
+    values:
+    - "S\xFAng"
+    - Gun
+  - key: items.helmet
+    values:
+    - "M\u0169 gi\xE1p"
+    - Helmet
+  - key: items.boots
+    values:
+    - "Gi\xE0y"
+    - Boots
+  - key: items.gloves
+    values:
+    - "G\u0103ng tay"
+    - Gloves
+  - key: items.ring
+    values:
+    - "Nh\u1EABn"
+    - Ring
+  - key: items.necklace
+    values:
+    - "D\xE2y chuy\u1EC1n"
+    - Necklace
+  - key: items.potion
+    values:
+    - "B\xECnh thu\u1ED1c"
+    - Potion
+  - key: items.health_potion
+    values:
+    - "B\xECnh m\xE1u"
+    - Health Potion
+  - key: items.mana_potion
+    values:
+    - "B\xECnh n\u0103ng l\u01B0\u1EE3ng"
+    - Mana Potion
+  - key: items.food
+    values:
+    - "Th\u1EE9c \u0103n"
+    - Food
+  - key: items.bomb
+    values:
+    - Bom
+    - Bomb
+  - key: items.arrow
+    values:
+    - "M\u0169i t\xEAn"
+    - Arrow
+  - key: items.bullet
+    values:
+    - "Vi\xEAn \u0111\u1EA1n"
+    - Bullet
+  - key: items.gold
+    values:
+    - "V\xE0ng"
+    - Gold
+  - key: items.silver
+    values:
+    - "B\u1EA1c"
+    - Silver
+  - key: items.coin
+    values:
+    - "\u0110\u1ED3ng xu"
+    - Coin
+  - key: items.gem
+    values:
+    - "\u0110\xE1 qu\xFD"
+    - Gem
+  - key: items.crystal
+    values:
+    - "Pha l\xEA"
+    - Crystal
+  - key: items.diamond
+    values:
+    - "Kim c\u01B0\u01A1ng"
+    - Diamond
+  - key: items.scroll
+    values:
+    - "Cu\u1ED9n gi\u1EA5y"
+    - Scroll
   - key: msg.are_you_sure
     values:
-    - Are you sure?
     - "B\u1EA1n c\xF3 ch\u1EAFc kh\xF4ng?"
+    - Are you sure?
   - key: msg.confirm_quit
     values:
-    - Do you want to quit the game?
     - "B\u1EA1n c\xF3 mu\u1ED1n tho\xE1t game kh\xF4ng?"
+    - Do you want to quit the game?
   - key: msg.confirm_delete
     values:
-    - Do you want to delete this?
     - "B\u1EA1n c\xF3 mu\u1ED1n x\xF3a m\u1EE5c n\xE0y kh\xF4ng?"
+    - Do you want to delete this?
   - key: msg.not_enough_coins
     values:
-    - Not enough coins
     - "Kh\xF4ng \u0111\u1EE7 xu"
+    - Not enough coins
   - key: msg.not_enough_gems
     values:
-    - Not enough gems
     - "Kh\xF4ng \u0111\u1EE7 kim c\u01B0\u01A1ng"
+    - Not enough gems
   - key: msg.no_internet
     values:
-    - No internet connection
     - "Kh\xF4ng c\xF3 k\u1EBFt n\u1ED1i m\u1EA1ng"
+    - No internet connection
   - key: msg.purchase_success
     values:
-    - Purchase successful!
     - "Mua th\xE0nh c\xF4ng!"
+    - Purchase successful!
   - key: msg.purchase_failed
     values:
-    - Purchase failed
     - "Mua th\u1EA5t b\u1EA1i"
+    - Purchase failed
   - key: msg.ad_not_ready
     values:
-    - Ad is not ready. Please try again later.
     - "Qu\u1EA3ng c\xE1o ch\u01B0a s\u1EB5n s\xE0ng. Vui l\xF2ng th\u1EED l\u1EA1i
       sau."
+    - Ad is not ready. Please try again later.
   - key: msg.reward_received
     values:
-    - You received {0} {1}
     - "B\u1EA1n nh\u1EADn \u0111\u01B0\u1EE3c {0} {1}"
+    - You received {0} {1}
   - key: msg.progress_saved
     values:
-    - Progress saved
     - "\u0110\xE3 l\u01B0u ti\u1EBFn tr\xECnh"
+    - Progress saved
   - key: msg.welcome_back
     values:
-    - Welcome back, {0}!
     - "Ch\xE0o m\u1EEBng tr\u1EDF l\u1EA1i, {0}!"
+    - Welcome back, {0}!
+  - key: msg.tutorial_tap
+    values:
+    - "Ch\u1EA1m \u0111\u1EC3 nh\u1EA3y"
+    - Tap to jump
+  - key: msg.tutorial_swipe
+    values:
+    - "Vu\u1ED1t \u0111\u1EC3 di chuy\u1EC3n"
+    - Swipe to move
+  - key: msg.tutorial_hold
+    values:
+    - "Gi\u1EEF \u0111\u1EC3 n\u1EA1p n\u0103ng l\u01B0\u1EE3ng"
+    - Hold to charge
+  - key: msg.tutorial_collect
+    values:
+    - "Thu th\u1EADp t\u1EA5t c\u1EA3 xu"
+    - Collect all the coins
+  - key: msg.tutorial_avoid
+    values:
+    - "Tr\xE1nh c\xE1c ch\u01B0\u1EDBng ng\u1EA1i v\u1EADt"
+    - Avoid the obstacles
+  - key: msg.tutorial_goal
+    values:
+    - "V\u1EC1 \u0111\xEDch \u0111\u1EC3 chi\u1EBFn th\u1EAFng"
+    - Reach the goal to win
+  - key: msg.update_available
+    values:
+    - "\u0110\xE3 c\xF3 b\u1EA3n c\u1EADp nh\u1EADt m\u1EDBi"
+    - A new update is available
+  - key: msg.update_required
+    values:
+    - "Vui l\xF2ng c\u1EADp nh\u1EADt game \u0111\u1EC3 ti\u1EBFp t\u1EE5c"
+    - Please update the game to continue
+  - key: msg.update_now
+    values:
+    - "C\u1EADp nh\u1EADt ngay"
+    - Update Now
+  - key: msg.maintenance
+    values:
+    - "M\xE1y ch\u1EE7 \u0111ang b\u1EA3o tr\xEC"
+    - The server is under maintenance
+  - key: msg.server_error
+    values:
+    - "L\u1ED7i m\xE1y ch\u1EE7. Vui l\xF2ng th\u1EED l\u1EA1i."
+    - Server error. Please try again.
+  - key: msg.connection_lost
+    values:
+    - "M\u1EA5t k\u1EBFt n\u1ED1i"
+    - Connection lost
+  - key: msg.try_again_later
+    values:
+    - "Vui l\xF2ng th\u1EED l\u1EA1i sau"
+    - Please try again later
+  - key: msg.login_failed
+    values:
+    - "\u0110\u0103ng nh\u1EADp th\u1EA5t b\u1EA1i"
+    - Login failed
+  - key: msg.login_success
+    values:
+    - "\u0110\u0103ng nh\u1EADp th\xE0nh c\xF4ng"
+    - Logged in successfully
+  - key: msg.logout_confirm
+    values:
+    - "B\u1EA1n c\xF3 mu\u1ED1n \u0111\u0103ng xu\u1EA5t kh\xF4ng?"
+    - Do you want to log out?
+  - key: msg.data_saved
+    values:
+    - "\u0110\xE3 l\u01B0u d\u1EEF li\u1EC7u"
+    - Data saved
+  - key: msg.data_loaded
+    values:
+    - "\u0110\xE3 t\u1EA3i d\u1EEF li\u1EC7u"
+    - Data loaded
+  - key: msg.delete_data_confirm
+    values:
+    - "To\xE0n b\u1ED9 ti\u1EBFn tr\xECnh s\u1EBD b\u1ECB m\u1EA5t. Ti\u1EBFp t\u1EE5c?"
+    - All progress will be lost. Continue?
+  - key: msg.reward_claimed
+    values:
+    - "\u0110\xE3 nh\u1EADn th\u01B0\u1EDFng!"
+    - Reward claimed!
+  - key: msg.reward_already_claimed
+    values:
+    - "B\u1EA1n \u0111\xE3 nh\u1EADn th\u01B0\u1EDFng r\u1ED3i"
+    - Reward already claimed
+  - key: msg.level_locked
+    values:
+    - "M\xE0n ch\u01A1i n\xE0y \u0111ang b\u1ECB kh\xF3a"
+    - This level is locked
+  - key: msg.complete_previous
+    values:
+    - "H\xE3y ho\xE0n th\xE0nh m\xE0n tr\u01B0\u1EDBc \u0111\xF3"
+    - Complete the previous level first
+  - key: msg.item_equipped
+    values:
+    - "\u0110\xE3 trang b\u1ECB v\u1EADt ph\u1EA9m"
+    - Item equipped
+  - key: msg.item_unlocked
+    values:
+    - "\u0110\xE3 m\u1EDF kh\xF3a v\u1EADt ph\u1EA9m"
+    - Item unlocked
+  - key: msg.new_high_score
+    values:
+    - "\u0110i\u1EC3m cao m\u1EDBi: {0}"
+    - 'New high score: {0}'
+  - key: msg.rate_prompt
+    values:
+    - "B\u1EA1n th\xEDch game ch\u1EE9? H\xE3y \u0111\xE1nh gi\xE1 ch\xFAng t\xF4i
+      nh\xE9!"
+    - Enjoying the game? Please rate us!
+  - key: msg.thanks_for_playing
+    values:
+    - "C\u1EA3m \u01A1n b\u1EA1n \u0111\xE3 ch\u01A1i!"
+    - Thanks for playing!
+  - key: msg.permission_required
+    values:
+    - "C\u1EA7n c\u1EA5p quy\u1EC1n"
+    - Permission required
+  - key: msg.ads_removed
+    values:
+    - "\u0110\xE3 x\xF3a qu\u1EA3ng c\xE1o"
+    - Ads removed
+  - key: msg.invite_sent
+    values:
+    - "\u0110\xE3 g\u1EEDi l\u1EDDi m\u1EDDi"
+    - Invitation sent
+  - key: msg.name_empty
+    values:
+    - "T\xEAn kh\xF4ng \u0111\u01B0\u1EE3c \u0111\u1EC3 tr\u1ED1ng"
+    - Name cannot be empty
+  - key: msg.code_invalid
+    values:
+    - "M\xE3 kh\xF4ng h\u1EE3p l\u1EC7"
+    - Invalid code
+  - key: msg.code_redeemed
+    values:
+    - "\u0110\u1ED5i m\xE3 th\xE0nh c\xF4ng"
+    - Code redeemed successfully
   sources:
-  - code: EN
-    json: {fileID: 4900000, guid: 112c0b36498911144951373d7b8aaba9, type: 3}
   - code: VI
     json: {fileID: 4900000, guid: 103aa5ff3930b8e4799872731ed1ab26, type: 3}
+  - code: EN
+    json: {fileID: 4900000, guid: 112c0b36498911144951373d7b8aaba9, type: 3}

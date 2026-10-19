@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: 0
-  sceneName: MainTheme
+  sceneName: Lobby
   sceneIndex: 0
   mode: 0
   setActiveScene: 0
@@ -1121,7 +1121,6 @@ MonoBehaviour:
   voiceParam: Voice
   playlist:
   - {fileID: 8300000, guid: 145d382f28843b548a61f0bf21fa70cb, type: 3}
-  - {fileID: 8300000, guid: 07c0bca0b6bc6df44a5df8a89e1c2820, type: 3}
   playOnStart: 1
   shuffle: 0
   repeatMode: 2
@@ -1174,11 +1173,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5057d23adb2722c4c8d1fc24bfdf119d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LanguageIndex: 0
   loadingCanvas: {fileID: 362319710}
   canvasGroup: {fileID: 362319711}
   slider: {fileID: 432758658}
   label: {fileID: 1855387025}
-  labelFormat: 'Loading <{0}> : {1}%'
   sortingOrder: 999
   dontDestroyOnLoad: 0
   prepareFrames: 2

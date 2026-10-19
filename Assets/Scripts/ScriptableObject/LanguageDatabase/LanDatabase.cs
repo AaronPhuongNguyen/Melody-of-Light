@@ -18,7 +18,7 @@ public class LanguageDatabase : ScriptableObject
     }
 
     [Tooltip("Language codes. The first one is the default / fallback language.")]
-    public List<string> languages = new List<string> { "EN", "VI" };
+    public List<string> languages = new List<string> { "VI", "EN" };
     public List<Entry> entries = new List<Entry>();
 
 #if UNITY_EDITOR
@@ -33,8 +33,8 @@ public class LanguageDatabase : ScriptableObject
 
     public List<Source> sources = new List<Source>
     {
-        new Source { code = "EN" },
-        new Source { code = "VI" }
+        new Source { code = "VI" },
+        new Source { code = "EN" }
     };
 #endif
 

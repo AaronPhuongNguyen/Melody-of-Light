@@ -32,13 +32,13 @@ public class LoadingManager : MonoBehaviour
 
     // ????????????? UI ?????????????
     [Header("UI")]
+    [SerializeField] private int LanguageIndex=0;
     [SerializeField] private Canvas loadingCanvas;
     [Tooltip("Optional. Used for fade in / out.")]
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Slider slider;
     [SerializeField] private TMP_Text label;
     [Tooltip("{0} = current asset, {1} = percent. Avoid raw < > (TextMeshPro treats them as tags; wrap in <noparse> if needed).")]
-    [SerializeField] private string labelFormat = "Loading <{0}>: {1}%";
     [SerializeField] private int sortingOrder = 999;
 
     // ????????????? Behaviour ?????????????
@@ -112,6 +112,8 @@ public class LoadingManager : MonoBehaviour
             if (transform.parent != null) transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
         }
+
+        Translator.SetLanguage(LanguageIndex);
     }
 
     private void OnDestroy()
@@ -371,7 +373,7 @@ public class LoadingManager : MonoBehaviour
         int pct = Mathf.RoundToInt(_display * 100f);
         if (slider != null) slider.value = _display;
         if (label != null && (force || pct != _lastPct || _asset != _lastAsset))
-            label.text = string.Format(labelFormat, _asset, pct);
+            label.text = $"{Translator.Get("common.loading")} <{_asset}> : {pct}";
         _lastPct = pct;
         _lastAsset = _asset;
     }

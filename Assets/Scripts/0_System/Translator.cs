@@ -28,7 +28,7 @@ public static class Translator
     public static bool LogMissingKeys = true;
 
     /// <summary>Used when the current language has no value for a key. Null/unknown = first language.</summary>
-    public static string FallbackLanguage = "EN";
+    public static string FallbackLanguage = "VI";
 
     private static LanguageDatabase _db;
     private static int _index = -1;
