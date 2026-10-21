@@ -370,10 +370,11 @@ public class StoryTeller : MonoBehaviour
 
     // ═════════════════════════ Visual helpers (also used by DialoguesAsset subclasses) ═════════════════════════
 
-    public void SetBackground(Sprite sprite)
+    public void SetBackground(Sprite sprite, Color _color=default)
     {
         if (Background == null) return;
         Background.sprite = sprite;
+        Background.color = _color;
         Background.enabled = sprite != null;
     }
 

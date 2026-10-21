@@ -5,11 +5,12 @@ using UnityEngine;
 [Serializable]
 public class MainStoryDialoguesAsset : DialoguesAsset
 {
-    public Sprite Background; // main story can change background.
+    public Sprite Background; // main story can change background
+    public Color BackgroundColor;
 
     public override void OnEnter(StoryTeller teller)
     {
         base.OnEnter(teller);
-        if (Background != null) teller.SetBackground(Background);
+        if (Background != null) teller.SetBackground(Background,BackgroundColor);
     }
 }

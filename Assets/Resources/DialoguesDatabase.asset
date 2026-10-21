@@ -31,7 +31,7 @@ MonoBehaviour:
         TextSound: {fileID: 0}
         MuteTextSound: 0
         NextSound: {fileID: 0}
-        Background: {fileID: 21300000, guid: 19cecc3eba3a3654ebfebba99406a0c6, type: 3}
+        Background: {fileID: 21300000, guid: 945ba465f65cf4045bf0283f34697806, type: 3}
     - rid: 1006844177243701252
       type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
       data:
@@ -43,4 +43,4 @@ MonoBehaviour:
         TextSound: {fileID: 0}
         MuteTextSound: 0
         NextSound: {fileID: 0}
-        Background: {fileID: 21300000, guid: 19cecc3eba3a3654ebfebba99406a0c6, type: 3}
+        Background: {fileID: 21300000, guid: 40de6602f6ff18e4883c3386297b4fe7, type: 3}
