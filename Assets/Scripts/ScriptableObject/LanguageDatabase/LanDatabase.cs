@@ -1,81 +1,66 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>One supported language. Its JSON files live in Resources/{resourcesRoot}/{folder or code}/.</summary>
+[Serializable]
+public class LanguageInfo
+{
+    public string code;         // "VI", "EN" ...
+    public string displayName;  // "Tiếng Việt", "English" (for language buttons)
+    public string folder;       // optional: folder name under the root. Empty = code.
+
+    public string FolderName => string.IsNullOrWhiteSpace(folder) ? (code ?? "").Trim() : folder.Trim();
+    public string DisplayNameOrCode => string.IsNullOrWhiteSpace(displayName) ? code : displayName;
+
+    public LanguageInfo() { }
+    public LanguageInfo(string code, string displayName = null, string folder = null)
+    {
+        this.code = code; this.displayName = displayName; this.folder = folder;
+    }
+}
+
 /// <summary>
-/// Stores every translation: one Entry per key, with one value per language (aligned with 'languages').
-/// Filled by the Language Importer tool (Tools > Localization > Language Importer). Read by Translator.
-/// Keep the asset at Assets/Resources/LanguageDatabase.asset so Translator can find it automatically.
+/// CONFIG ONLY. Holds no translations (they are loaded per language at runtime by Translator).
+///
+/// Folder layout (inside any Resources folder):
+///   Resources/Localization/VI/*.json
+///   Resources/Localization/EN/*.json      (sub-folders are scanned too)
+///
+/// Keep the asset at Assets/Resources/LanguageDatabase.asset so Translator finds it automatically.
+/// The asset is optional: Translator.Initialize(...) can configure everything from code.
 /// </summary>
 [CreateAssetMenu(fileName = "LanguageDatabase", menuName = "Database/Localization")]
 public class LanguageDatabase : ScriptableObject
 {
-    [Serializable]
-    public class Entry
-    {
-        public string key;
-        public string[] values = Array.Empty<string>(); // index = language index
-    }
+    [Tooltip("Resources sub-path that contains one folder per language.")]
+    public string resourcesRoot = "Localization";
 
-    [Tooltip("Language codes. The first one is the default / fallback language.")]
-    public List<string> languages = new List<string> { "VI", "EN" };
-    public List<Entry> entries = new List<Entry>();
+    [Tooltip("ON: key = fileName + '.' + key  (common.json {\"ok\":\"OK\"} → 'common.ok').\nOFF: keys are used exactly as written in the files.")]
+    public bool prefixKeysWithFileName = false;
 
-#if UNITY_EDITOR
-    // Editor-only: JSON source per language, remembered by the importer tool.
-    // Not compiled into builds, so the TextAssets are not shipped.
-    [Serializable]
-    public class Source
-    {
-        public string code;
-        public TextAsset json;
-    }
+    [Tooltip("Used on first run when the saved / system language is not available.")]
+    public string defaultLanguage = "VI";
 
-    public List<Source> sources = new List<Source>
+    [Tooltip("Used when the current language has no value for a key. Empty = no fallback.")]
+    public string fallbackLanguage = "VI";
+
+    public List<LanguageInfo> languages = new List<LanguageInfo>
     {
-        new Source { code = "VI" },
-        new Source { code = "EN" }
+        new LanguageInfo("VI", "Tiếng Việt"),
+        new LanguageInfo("EN", "English")
     };
-#endif
-
-    private Dictionary<string, Entry> _lookup;
 
     public int LanguageCount => languages.Count;
-    public int KeyCount => entries.Count;
 
     public int IndexOf(string code)
     {
         if (string.IsNullOrEmpty(code)) return -1;
         for (int i = 0; i < languages.Count; i++)
-            if (string.Equals(languages[i], code, StringComparison.OrdinalIgnoreCase)) return i;
+            if (languages[i] != null && string.Equals(languages[i].code, code, StringComparison.OrdinalIgnoreCase)) return i;
         return -1;
     }
 
-    public bool TryGetEntry(string key, out Entry entry)
-    {
-        if (_lookup == null) BuildLookup();
-        if (string.IsNullOrEmpty(key)) { entry = null; return false; }
-        return _lookup.TryGetValue(key, out entry);
-    }
-
-    /// <summary>Returns the raw value or null if the key / language does not exist.</summary>
-    public string GetValue(string key, int languageIndex)
-    {
-        if (!TryGetEntry(key, out Entry e)) return null;
-        if (languageIndex < 0 || languageIndex >= e.values.Length) return null;
-        return e.values[languageIndex];
-    }
-
-    /// <summary>Call after changing 'entries' by code.</summary>
-    public void InvalidateLookup() => _lookup = null;
-
-    private void BuildLookup()
-    {
-        _lookup = new Dictionary<string, Entry>(entries.Count, StringComparer.Ordinal);
-        foreach (Entry e in entries)
-            if (e != null && !string.IsNullOrEmpty(e.key)) _lookup[e.key] = e;
-    }
-
-    private void OnEnable() => _lookup = null;
-    private void OnValidate() => _lookup = null;
+    public string GetResourcePath(LanguageInfo info)
+        => (resourcesRoot ?? "").Trim().Trim('/') + "/" + info.FolderName;
 }
