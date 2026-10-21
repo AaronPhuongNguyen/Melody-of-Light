@@ -32,7 +32,6 @@ public class LoadingManager : MonoBehaviour
 
     // ????????????? UI ?????????????
     [Header("UI")]
-    [SerializeField] private int LanguageIndex=0;
     [SerializeField] private Canvas loadingCanvas;
     [Tooltip("Optional. Used for fade in / out.")]
     [SerializeField] private CanvasGroup canvasGroup;
@@ -112,8 +111,6 @@ public class LoadingManager : MonoBehaviour
             if (transform.parent != null) transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
         }
-
-        Translator.SetLanguage(LanguageIndex);
     }
 
     private void OnDestroy()
