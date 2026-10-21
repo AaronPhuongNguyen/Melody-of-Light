@@ -1,77 +1,106 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-/// <summary>
-/// Inspector for DialoguesDatabase (put inside an "Editor" folder).
-/// Lines are stored with [SerializeReference] so each line can be a different subclass of DialoguesAsset.
-/// Unity's array "+" can't choose a type, so use the "Add Line ▾" button of each dialogue instead.
-/// </summary>
-[CustomEditor(typeof(DialoguesDatabase))]
-public class DialoguesDatabaseEditor : Editor
+[CustomPropertyDrawer(typeof(Dialogues))]
+public class DialoguesDrawer : PropertyDrawer
 {
-    public override void OnInspectorGUI()
+    static Type[] _types;
+    static Type[] Types => _types ??= TypeCache.GetTypesDerivedFrom<DialoguesAsset>()
+        .Where(t => !t.IsAbstract && !t.IsGenericType)
+        .Prepend(typeof(DialoguesAsset)).ToArray();
+
+    const float Line = 18f, Gap = 2f;
+
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        DrawDefaultInspector();
+        float h = Line;
+        if (!property.isExpanded) return h;
 
-        serializedObject.Update();
-        SerializedProperty list = serializedObject.FindProperty("dialogues");
-
-        EditorGUILayout.Space(8);
-        EditorGUILayout.LabelField("Quick add (typed lines)", EditorStyles.boldLabel);
-
-        for (int i = 0; i < list.arraySize; i++)
+        h += Line + Gap;                                   // name field
+        var arr = property.FindPropertyRelative("dialog");
+        for (int i = 0; i < arr.arraySize; i++)
         {
-            SerializedProperty chapter = list.GetArrayElementAtIndex(i);
-            string title = chapter.FindPropertyRelative("DialogueName").stringValue;
-            string linesPath = chapter.FindPropertyRelative("dialog").propertyPath;
+            var el = arr.GetArrayElementAtIndex(i);
+            h += Line + Gap;                               // header row
+            if (el.managedReferenceValue != null)
+                h += EditorGUI.GetPropertyHeight(el, true) + Gap;
+        }
+        return h + Line + Gap;                             // Add Line button
+    }
 
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(string.IsNullOrEmpty(title) ? $"(dialogue {i})" : title);
-            if (GUILayout.Button("Add Line ▾", GUILayout.Width(90))) ShowTypeMenu(linesPath);
-            if (GUILayout.Button("Clean nulls", GUILayout.Width(80))) RemoveNulls(linesPath);
-            EditorGUILayout.EndHorizontal();
+    public override void OnGUI(Rect pos, SerializedProperty property, GUIContent label)
+    {
+        var nameProp = property.FindPropertyRelative("DialogueName");
+        var arr = property.FindPropertyRelative("dialog");
+        var so = property.serializedObject;
+        string path = property.propertyPath;
+
+        var r = new Rect(pos.x, pos.y, pos.width, Line);
+        property.isExpanded = EditorGUI.Foldout(r, property.isExpanded,
+            $"{nameProp.stringValue}  ({arr.arraySize} lines)", true);
+        if (!property.isExpanded) return;
+
+        EditorGUI.indentLevel++;
+        r.y += Line + Gap;
+        EditorGUI.PropertyField(r, nameProp);
+
+        int removeAt = -1, fixAt = -1;
+        for (int i = 0; i < arr.arraySize; i++)
+        {
+            var el = arr.GetArrayElementAtIndex(i);
+            bool isNull = el.managedReferenceValue == null;
+            string typeName = isNull ? "NULL" : el.managedReferenceValue.GetType().Name;
+
+            r.y += Line + Gap;
+            var header = new Rect(r.x, r.y, r.width - 70, Line);
+            EditorGUI.LabelField(header, $"Line {i}  [{typeName}]", EditorStyles.boldLabel);
+            if (isNull && GUI.Button(new Rect(r.xMax - 140, r.y, 66, Line), "Fix")) fixAt = i;
+            if (GUI.Button(new Rect(r.xMax - 70, r.y, 70, Line), "Remove")) removeAt = i;
+
+            if (!isNull)
+            {
+                float h = EditorGUI.GetPropertyHeight(el, true);
+                r.y += Line + Gap;
+                EditorGUI.PropertyField(new Rect(r.x, r.y, r.width, h), el, GUIContent.none, true);
+                r.y += h - Line;
+            }
         }
 
-        if (serializedObject.ApplyModifiedProperties())
-            ((DialoguesDatabase)target).InvalidateLookup();
-    }
-
-    private void ShowTypeMenu(string linesPath)
-    {
-        var types = new List<Type> { typeof(DialoguesAsset) };
-        foreach (Type t in TypeCache.GetTypesDerivedFrom<DialoguesAsset>())
-            if (!t.IsAbstract && !t.IsGenericType) types.Add(t);
-
-        var menu = new GenericMenu();
-        foreach (Type t in types)
+        r.y += Line + Gap;
+        if (GUI.Button(new Rect(r.x, r.y, r.width, Line), "Add Line ▾"))
         {
-            Type captured = t;
-            menu.AddItem(new GUIContent(t.Name), false, () => AddLine(linesPath, captured));
+            var menu = new GenericMenu();
+            foreach (var t in Types)
+            {
+                var type = t;
+                menu.AddItem(new GUIContent(type.Name), false, () =>
+                {
+                    so.Update();
+                    var a = so.FindProperty(path).FindPropertyRelative("dialog");
+                    a.arraySize++;
+                    a.GetArrayElementAtIndex(a.arraySize - 1).managedReferenceValue = Activator.CreateInstance(type);
+                    so.ApplyModifiedProperties();
+                });
+            }
+            menu.ShowAsContext();
         }
-        menu.ShowAsContext();
-    }
+        EditorGUI.indentLevel--;
 
-    private void AddLine(string linesPath, Type type)
-    {
-        serializedObject.Update();
-        SerializedProperty lines = serializedObject.FindProperty(linesPath);
-        if (lines == null) return;
-
-        lines.arraySize++;
-        lines.GetArrayElementAtIndex(lines.arraySize - 1).managedReferenceValue = Activator.CreateInstance(type);
-        serializedObject.ApplyModifiedProperties();
-        ((DialoguesDatabase)target).InvalidateLookup();
-    }
-
-    private void RemoveNulls(string linesPath)
-    {
-        SerializedProperty lines = serializedObject.FindProperty(linesPath);
-        if (lines == null) return;
-
-        for (int i = lines.arraySize - 1; i >= 0; i--)
-            if (lines.GetArrayElementAtIndex(i).managedReferenceValue == null)
-                lines.DeleteArrayElementAtIndex(i);
+        if (fixAt >= 0)
+        {
+            arr.GetArrayElementAtIndex(fixAt).managedReferenceValue = new DialoguesAsset();
+            so.ApplyModifiedProperties();
+            GUIUtility.ExitGUI();
+        }
+        if (removeAt >= 0)
+        {
+            arr.DeleteArrayElementAtIndex(removeAt);
+            so.ApplyModifiedProperties();
+            GUIUtility.ExitGUI();
+        }
     }
 }
+#endif

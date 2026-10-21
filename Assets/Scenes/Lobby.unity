@@ -1721,7 +1721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: 0
-  sceneName: Test
+  sceneName: Home
   sceneIndex: 0
   mode: 0
   setActiveScene: 0

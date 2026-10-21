@@ -13,21 +13,34 @@ MonoBehaviour:
   m_Name: DialoguesDatabase
   m_EditorClassIdentifier: 
   dialogues:
-  - DialogueName: Chapter 1
+  - DialogueName: Welcome
     dialog:
-    - rid: 1006844175335817219
+    - rid: 1006844177243701250
+    - rid: 1006844177243701252
   references:
     version: 2
     RefIds:
-    - rid: 1006844175335817219
+    - rid: 1006844177243701250
       type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
       data:
-        SpeakerImage: {fileID: 0}
-        Speaker: Human
-        Content: dia.humanIntroduce
+        SpeakerImage: {fileID: 21300000, guid: a927f17a8fa4f8340ab8ea4a4a933463, type: 3}
+        Speaker: Lily
+        Content: dia.welcome0
         AutoAdvanceDelay: -1
         Voice: {fileID: 0}
         TextSound: {fileID: 0}
         MuteTextSound: 0
         NextSound: {fileID: 0}
-        Background: {fileID: 0}
+        Background: {fileID: 21300000, guid: 19cecc3eba3a3654ebfebba99406a0c6, type: 3}
+    - rid: 1006844177243701252
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 21300000, guid: a927f17a8fa4f8340ab8ea4a4a933463, type: 3}
+        Speaker: Lily
+        Content: dia.welcome1
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+        Background: {fileID: 21300000, guid: 19cecc3eba3a3654ebfebba99406a0c6, type: 3}
