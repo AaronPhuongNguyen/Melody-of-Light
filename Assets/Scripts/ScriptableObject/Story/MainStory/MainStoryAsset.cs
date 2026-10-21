@@ -6,7 +6,7 @@ using UnityEngine;
 public class MainStoryDialoguesAsset : DialoguesAsset
 {
     public Sprite Background; // main story can change background
-    public Color BackgroundColor;
+    public Color BackgroundColor = Color.white;
 
     public override void OnEnter(StoryTeller teller)
     {
