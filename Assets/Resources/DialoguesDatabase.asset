@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 794694e551835e44c92d1ba318be601f, type: 3}
+  m_Name: DialoguesDatabase
+  m_EditorClassIdentifier: 
+  dialogues:
+  - DialogueName: Chapter 1
+    dialog:
+    - rid: 1006844175335817219
+  references:
+    version: 2
+    RefIds:
+    - rid: 1006844175335817219
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 0}
+        Speaker: Human
+        Content: dia.humanIntroduce
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+        Background: {fileID: 0}

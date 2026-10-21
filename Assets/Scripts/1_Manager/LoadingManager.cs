@@ -370,7 +370,7 @@ public class LoadingManager : MonoBehaviour
         int pct = Mathf.RoundToInt(_display * 100f);
         if (slider != null) slider.value = _display;
         if (label != null && (force || pct != _lastPct || _asset != _lastAsset))
-            label.text = $"{Translator.Get("common.loading")} <{_asset}> : {pct}";
+            label.text = $"{Translator.Get("common.loading")} <{_asset}> : {pct}%";
         _lastPct = pct;
         _lastAsset = _asset;
     }
