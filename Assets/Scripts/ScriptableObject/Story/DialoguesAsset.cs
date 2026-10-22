@@ -52,4 +52,5 @@ public class DialoguesAsset
 
     public static DialoguesAsset Create(string speaker, string contentKey, Sprite speakerImage = null, float autoAdvanceDelay = -1f)
         => new DialoguesAsset { Speaker = speaker, Content = contentKey, SpeakerImage = speakerImage, AutoAdvanceDelay = autoAdvanceDelay };
+
 }

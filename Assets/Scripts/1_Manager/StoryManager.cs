@@ -39,6 +39,9 @@ public class StoryTeller : MonoBehaviour
     public DialoguesDatabase dialoguesDatabase;
     [Tooltip("Director of the cutscene that wants to talk. Used (once) by the next StartDialogue without an explicit director.")]
     public PlayableDirector playableDirector;
+    [Tooltip("When a dialogue that is already completed is started again, this one plays instead (if it exists).")]
+    public bool FallbackWhenCompleted = true;
+    public string CompletedFallbackName = "dia.completed0";
 
     [Header("Visual")]
     public Canvas StoryCanvas;
@@ -206,6 +209,15 @@ public class StoryTeller : MonoBehaviour
             }
             EndInternal(true, false);
         }
+            if (FallbackWhenCompleted && dialogues.IsCompleted
+        && dialogues.DialogueName != CompletedFallbackName
+        && dialoguesDatabase != null
+        && dialoguesDatabase.TryGet(CompletedFallbackName, out Dialogues fallback)
+        && fallback.Count > 0)
+            {
+                dialogues = fallback;
+                startIndex = 0;
+            }
 
         _dialogues = dialogues;
         _director = director;
@@ -352,6 +364,9 @@ public class StoryTeller : MonoBehaviour
             Pending p = _queue.Dequeue();
             StartDialogue(p.dialogues, p.director, p.start);
         }
+        // Natural end or Skip() counts as completed; an interrupt does not.
+        if (startQueued && finished != null && finished.DialogueName != CompletedFallbackName)
+            PlayerManager.Instance?.CompleteDialogue(finished.DialogueName);
     }
 
     // ═════════════════════════ Variables ═════════════════════════

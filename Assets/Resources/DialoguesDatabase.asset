@@ -13,36 +13,20 @@ MonoBehaviour:
   m_Name: DialoguesDatabase
   m_EditorClassIdentifier: 
   dialogues:
-  - DialogueName: Welcome
+  - DialogueName: Completed Dialogue
     dialog:
-    - rid: 1006844177243701250
-    - rid: 1006844177243701252
+    - rid: 1006844187255767040
   references:
     version: 2
     RefIds:
-    - rid: 1006844177243701250
-      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+    - rid: 1006844187255767040
+      type: {class: DialoguesAsset, ns: , asm: Assembly-CSharp}
       data:
-        SpeakerImage: {fileID: 21300000, guid: a927f17a8fa4f8340ab8ea4a4a933463, type: 3}
-        Speaker: Lily
-        Content: dia.welcome0
+        SpeakerImage: {fileID: 21300000, guid: 336f8afe26bfa194b918b8990d427120, type: 3}
+        Speaker: System
+        Content: dia.completing0
         AutoAdvanceDelay: -1
         Voice: {fileID: 0}
         TextSound: {fileID: 0}
         MuteTextSound: 0
         NextSound: {fileID: 0}
-        Background: {fileID: 21300000, guid: 945ba465f65cf4045bf0283f34697806, type: 3}
-        BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-    - rid: 1006844177243701252
-      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
-      data:
-        SpeakerImage: {fileID: 21300000, guid: a927f17a8fa4f8340ab8ea4a4a933463, type: 3}
-        Speaker: Lily
-        Content: dia.welcome1
-        AutoAdvanceDelay: -1
-        Voice: {fileID: 0}
-        TextSound: {fileID: 0}
-        MuteTextSound: 0
-        NextSound: {fileID: 0}
-        Background: {fileID: 21300000, guid: 40de6602f6ff18e4883c3386297b4fe7, type: 3}
-        BackgroundColor: {r: 1, g: 1, b: 1, a: 1}

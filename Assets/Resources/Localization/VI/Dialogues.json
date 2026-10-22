@@ -1,6 +1,11 @@
 {
 	"dia":{
-		"welcome0":"Chào mừng bạn đã đến với Melody of Light",
+		"completed0":"Bạn đã hoàn thành hội thoại này rồi",
+		"completed1":"...Đã hoàn thành",
+		"completing0":"Đang trong tiến trình",
+		"completing1":"Tiến trình đang xảy ra...",
+
+		"welcome0":"Chào mừng bạn đã đến với Melody of Light.",
 		"welcome1":"Chúng tôi nên gọi bạn thế nào?"
 	}
 }

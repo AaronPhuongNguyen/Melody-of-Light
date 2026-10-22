@@ -2,24 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>One supported language. Its JSON files live in Resources/{resourcesRoot}/{folder or code}/.</summary>
-[Serializable]
-public class LanguageInfo
-{
-    public string code;         // "VI", "EN" ...
-    public string displayName;  // "Tiếng Việt", "English" (for language buttons)
-    public string folder;       // optional: folder name under the root. Empty = code.
-
-    public string FolderName => string.IsNullOrWhiteSpace(folder) ? (code ?? "").Trim() : folder.Trim();
-    public string DisplayNameOrCode => string.IsNullOrWhiteSpace(displayName) ? code : displayName;
-
-    public LanguageInfo() { }
-    public LanguageInfo(string code, string displayName = null, string folder = null)
-    {
-        this.code = code; this.displayName = displayName; this.folder = folder;
-    }
-}
-
 /// <summary>
 /// CONFIG ONLY. Holds no translations (they are loaded per language at runtime by Translator).
 ///
@@ -63,4 +45,23 @@ public class LanguageDatabase : ScriptableObject
 
     public string GetResourcePath(LanguageInfo info)
         => (resourcesRoot ?? "").Trim().Trim('/') + "/" + info.FolderName;
+}
+
+
+/// <summary>One supported language. Its JSON files live in Resources/{resourcesRoot}/{folder or code}/.</summary>
+[Serializable]
+public class LanguageInfo
+{
+    public string code;         // "VI", "EN" ...
+    public string displayName;  // "Tiếng Việt", "English" (for language buttons)
+    public string folder;       // optional: folder name under the root. Empty = code.
+
+    public string FolderName => string.IsNullOrWhiteSpace(folder) ? (code ?? "").Trim() : folder.Trim();
+    public string DisplayNameOrCode => string.IsNullOrWhiteSpace(displayName) ? code : displayName;
+
+    public LanguageInfo() { }
+    public LanguageInfo(string code, string displayName = null, string folder = null)
+    {
+        this.code = code; this.displayName = displayName; this.folder = folder;
+    }
 }

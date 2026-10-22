@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c2e01df34b0c4904b8bcb3aada49b597, type: 3}
   m_Name: LanguageDatabase
-  m_EditorClassIdentifier: Assembly-CSharp::LanguageDatabase
+  m_EditorClassIdentifier: 
   resourcesRoot: Localization
   prefixKeysWithFileName: 0
   defaultLanguage: VI

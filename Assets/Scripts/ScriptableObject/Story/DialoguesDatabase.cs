@@ -35,6 +35,9 @@ public class Dialogues
         dialog = lines ?? Array.Empty<DialoguesAsset>();
     }
 
+
+    public bool IsCompleted =>
+    PlayerManager.Instance != null && PlayerManager.Instance.IsDialogueCompleted(DialogueName);
     public int Count => dialog != null ? dialog.Length : 0;
 
     public DialoguesAsset this[int index] => dialog != null && index >= 0 && index < dialog.Length ? dialog[index] : null;
