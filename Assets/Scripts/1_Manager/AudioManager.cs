@@ -8,9 +8,43 @@ public enum MusicRepeatMode { None, Track, Playlist }
 public enum MusicState { Stopped, Playing, Paused }
 
 /// <summary>
+/// A named set of tracks with its own settings. Define them in the AudioManager inspector, or register them from code.
+/// Add new per-playlist options here (e.g. crossfade override, pitch) and apply them in LoadPlaylist().
+/// </summary>
+[Serializable]
+public class MusicPlaylist
+{
+    public string Name = "New Playlist";
+    public List<AudioClip> Clips = new List<AudioClip>();
+    public bool Shuffle = true;
+    public MusicRepeatMode RepeatMode = MusicRepeatMode.Playlist;
+    [Range(0f, 1f), Tooltip("Volume multiplier for this playlist (on top of the Music mixer volume).")]
+    public float Volume = 1f;
+
+    public MusicPlaylist() { }
+
+    public MusicPlaylist(string name, IEnumerable<AudioClip> clips, bool shuffle = true,
+                         MusicRepeatMode repeat = MusicRepeatMode.Playlist, float volume = 1f)
+    {
+        Name = name;
+        if (clips != null) Clips.AddRange(clips);
+        Shuffle = shuffle;
+        RepeatMode = repeat;
+        Volume = volume;
+    }
+}
+
+/// <summary>
 /// Architecture: Music Player (2 sources for crossfade) + SFX Player (pooled) + Voice Player (queued, ducks music).
 /// Mixer setup: create an AudioMixer with groups Music / SFX / Voice (children of Master) and expose these params:
 /// MasterVolume, MusicVolume, SFXVolume, VoiceVolume (names are configurable below).
+///
+/// Music playlists:
+///   AudioManager.Instance.PlayPlaylist("Battle");                       // named playlist from the inspector / RegisterPlaylist
+///   AudioManager.Instance.ReplacePlaylist(clips);                       // clear the current one and play these clips
+///   AudioManager.Instance.ReplacePlaylist(clips, autoPlay: false);      // current song finishes, then the new list starts
+///   AudioManager.Instance.ClearPlaylist(stopMusic: true, fade: 1f);
+///   AudioManager.Instance.PushPlaylist("Boss");  ... PopPlaylist();     // boss music, then back to where it was
 /// </summary>
 [DefaultExecutionOrder(-99)]
 public class AudioManager : MonoBehaviour
@@ -30,7 +64,12 @@ public class AudioManager : MonoBehaviour
 
     // ───────────── Music ─────────────
     [Header("Music")]
+    [Tooltip("The ACTIVE clip list. Filled by the start playlist, PlayPlaylist(name), ReplacePlaylist(...) or SetPlaylist(...).")]
     [SerializeField] private List<AudioClip> playlist = new List<AudioClip>();
+    [Tooltip("Named playlists you can switch to with PlayPlaylist(\"name\").")]
+    [SerializeField] private List<MusicPlaylist> playlists = new List<MusicPlaylist>();
+    [Tooltip("Loaded at start instead of the clip list above. Empty = use the clip list above.")]
+    [SerializeField] private string startPlaylistName = "";
     [SerializeField] private bool playOnStart = true;
     [SerializeField] private bool shuffle = true;
     [SerializeField] private MusicRepeatMode repeatMode = MusicRepeatMode.Playlist;
@@ -45,6 +84,8 @@ public class AudioManager : MonoBehaviour
 
     public event Action<AudioClip> OnMusicChanged;
     public event Action OnMusicStopped;
+    /// <summary>The active playlist was replaced / cleared / restored. Arg: its name ("" for unnamed).</summary>
+    public event Action<string> OnPlaylistChanged;
     public event Action<AudioClip> OnVoiceStarted;
     public event Action<AudioClip> OnVoiceEnded;
 
@@ -62,6 +103,20 @@ public class AudioManager : MonoBehaviour
     private int _lastPlayedIndex = -1;
     private int _currentIndex = -1;   // -1 = ad-hoc clip not in playlist
     private bool _autoAdvancing;
+    private float _playlistVolume = 1f;
+
+    // saved music states for PushPlaylist / PopPlaylist
+    private class MusicSnapshot
+    {
+        public string Name;
+        public List<AudioClip> Clips;
+        public bool Shuffle;
+        public MusicRepeatMode Repeat;
+        public float Volume;
+        public AudioClip Clip;
+        public float Time;
+    }
+    private readonly Stack<MusicSnapshot> _stack = new Stack<MusicSnapshot>();
 
     private AudioSource[] _sfxPool;
     private int _sfxCursor;
@@ -78,7 +133,7 @@ public class AudioManager : MonoBehaviour
     private readonly Dictionary<string, float> _volumes = new Dictionary<string, float>();
     private readonly Dictionary<string, bool> _muted = new Dictionary<string, bool>();
 
-
+    // ───────────── properties ─────────────
     public MusicState MusicState => _musicState;
     public AudioClip CurrentMusic => _music[_active].clip;
     public int CurrentTrackIndex => _currentIndex;
@@ -86,6 +141,12 @@ public class AudioManager : MonoBehaviour
     public IReadOnlyList<AudioClip> Playlist => playlist;
     public float MusicTime => _music[_active].time;
     public float MusicLength => _music[_active].clip != null ? _music[_active].clip.length : 0f;
+
+    /// <summary>Name of the active playlist. Empty when it was built from loose clips.</summary>
+    public string CurrentPlaylistName { get; private set; } = "";
+    public int PlaylistCount => playlist.Count;
+    public int PlaylistStackDepth => _stack.Count;
+    public IReadOnlyList<MusicPlaylist> NamedPlaylists => playlists;
 
     public bool Shuffle
     {
@@ -101,6 +162,7 @@ public class AudioManager : MonoBehaviour
 
     public float CrossfadeDuration { get => crossfadeDuration; set => crossfadeDuration = Mathf.Max(0f, value); }
 
+    // ═════════════════════════ Unity ═════════════════════════
 
     private void Awake()
     {
@@ -120,6 +182,14 @@ public class AudioManager : MonoBehaviour
     {
         if (Instance != this) return;
         ApplyAllVolumes(); // set mixer params in Start (more reliable than Awake)
+
+        if (!string.IsNullOrEmpty(startPlaylistName) && TryGetPlaylist(startPlaylistName, out MusicPlaylist start))
+        {
+            LoadPlaylist(start);
+            if (playOnStart && playlist.Count > 0) PlayPlaylist();
+            return;
+        }
+
         RebuildOrder(false);
         if (playOnStart && playlist.Count > 0) PlayPlaylist();
     }
@@ -171,6 +241,8 @@ public class AudioManager : MonoBehaviour
         _voice.outputAudioMixerGroup = voiceGroup;
         _voice.spatialBlend = 0f;
     }
+
+    // ═════════════════════════ Volumes ═════════════════════════
 
     public float MasterVolume { get => GetVolume(masterParam); set => SetVolume(masterParam, value); }
     public float MusicVolume { get => GetVolume(musicParam); set => SetVolume(musicParam, value); }
@@ -230,15 +302,218 @@ public class AudioManager : MonoBehaviour
     /// <summary>Animate any exposed mixer parameter (e.g. low-pass cutoff for a pause-menu muffle).</summary>
     public void SetMixerParam(string param, float value) { if (mixer != null) mixer.SetFloat(param, value); }
 
+    // ═════════════════════════ Playlist: named ═════════════════════════
 
-    public void SetPlaylist(IEnumerable<AudioClip> clips, bool autoPlay = true)
+    public bool HasPlaylist(string name) => TryGetPlaylist(name, out _);
+
+    public bool TryGetPlaylist(string name, out MusicPlaylist result)
+    {
+        result = null;
+        if (string.IsNullOrEmpty(name)) return false;
+        foreach (MusicPlaylist p in playlists)
+            if (p != null && string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)) { result = p; return true; }
+        return false;
+    }
+
+    public IEnumerable<string> PlaylistNames
+    {
+        get { foreach (MusicPlaylist p in playlists) if (p != null) yield return p.Name; }
+    }
+
+    /// <summary>Add (or overwrite) a named playlist from code. It is not played until you call PlayPlaylist(name).</summary>
+    public MusicPlaylist RegisterPlaylist(string name, IEnumerable<AudioClip> clips, bool shuffle = true,
+                                          MusicRepeatMode repeat = MusicRepeatMode.Playlist, float volume = 1f)
+    {
+        var p = new MusicPlaylist(name, clips, shuffle, repeat, volume);
+        RegisterPlaylist(p);
+        return p;
+    }
+
+    public void RegisterPlaylist(MusicPlaylist p)
+    {
+        if (p == null || string.IsNullOrEmpty(p.Name)) return;
+        int i = playlists.FindIndex(x => x != null && string.Equals(x.Name, p.Name, StringComparison.OrdinalIgnoreCase));
+        if (i >= 0) playlists[i] = p; else playlists.Add(p);
+    }
+
+    public bool UnregisterPlaylist(string name)
+    {
+        int i = playlists.FindIndex(x => x != null && string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
+        if (i < 0) return false;
+        playlists.RemoveAt(i);
+        return true;
+    }
+
+    /// <summary>
+    /// Replace the active playlist with a named one and play it from the start (crossfades from the current track).
+    /// Does nothing if it is already the one playing, unless restartIfSame is true. Returns false when the name is unknown.
+    /// </summary>
+    public bool PlayPlaylist(string name, float fade = -1f, bool restartIfSame = false)
+    {
+        if (!TryGetPlaylist(name, out MusicPlaylist p))
+        {
+            Debug.LogWarning($"[AudioManager] Playlist '{name}' not found.");
+            return false;
+        }
+        if (!restartIfSame && _musicState == MusicState.Playing &&
+            string.Equals(CurrentPlaylistName, p.Name, StringComparison.OrdinalIgnoreCase)) return true;
+
+        LoadPlaylist(p);
+        if (playlist.Count == 0) { StopMusic(fade < 0f ? crossfadeDuration : fade); return true; }
+        PlayPlaylist(fade);
+        return true;
+    }
+
+    /// <summary>Replace the active playlist with a MusicPlaylist object (not required to be registered).</summary>
+    public void ReplacePlaylist(MusicPlaylist p, bool autoPlay = true, float fade = -1f)
+    {
+        if (p == null) return;
+        LoadPlaylist(p);
+        FinishReplace(autoPlay, fade);
+    }
+
+    // ═════════════════════════ Playlist: replace / clear ═════════════════════════
+
+    /// <summary>
+    /// Clear the active playlist and replace it with these clips (keeps the current shuffle / repeat settings).
+    /// autoPlay = true: start the new list now (crossfade). autoPlay = false: the song that is playing finishes
+    /// first, then the new list starts.
+    /// </summary>
+    public void ReplacePlaylist(IEnumerable<AudioClip> clips, bool autoPlay = true, float fade = -1f, string name = "")
     {
         playlist.Clear();
-        playlist.AddRange(clips);
+        if (clips != null)
+            foreach (AudioClip c in clips) if (c != null) playlist.Add(c);
+
+        CurrentPlaylistName = name ?? "";
+        _playlistVolume = 1f;
         _lastPlayedIndex = -1;
         RebuildOrder(false);
-        if (autoPlay) PlayPlaylist();
+        OnPlaylistChanged?.Invoke(CurrentPlaylistName);
+        FinishReplace(autoPlay, fade);
     }
+
+    /// <summary>Same as ReplacePlaylist(clips, autoPlay). Kept for older code.</summary>
+    public void SetPlaylist(IEnumerable<AudioClip> clips, bool autoPlay = true) => ReplacePlaylist(clips, autoPlay);
+
+    /// <summary>
+    /// Empty the active playlist. The song that is playing is left alone unless stopMusic is true;
+    /// when it ends nothing follows.
+    /// </summary>
+    public void ClearPlaylist(bool stopMusic = false, float fade = 0f)
+    {
+        playlist.Clear();
+        _order.Clear();
+        _orderPos = -1;
+        _currentIndex = -1;
+        _lastPlayedIndex = -1;
+        CurrentPlaylistName = "";
+        _playlistVolume = 1f;
+        OnPlaylistChanged?.Invoke("");
+        if (stopMusic) StopMusic(fade);
+    }
+
+    /// <summary>Clear the playlist AND the push/pop stack.</summary>
+    public void ClearAllPlaylists(bool stopMusic = false, float fade = 0f)
+    {
+        _stack.Clear();
+        ClearPlaylist(stopMusic, fade);
+    }
+
+    private void FinishReplace(bool autoPlay, float fade)
+    {
+        if (autoPlay)
+        {
+            if (playlist.Count > 0) PlayPlaylist(fade);
+            else StopMusic(fade < 0f ? crossfadeDuration : fade);
+            return;
+        }
+
+        // keep the current song; the new list starts when it ends
+        AudioClip playing = _musicState != MusicState.Stopped ? _music[_active].clip : null;
+        _currentIndex = playing != null ? playlist.IndexOf(playing) : -1;
+        if (_currentIndex >= 0) _orderPos = Mathf.Max(0, _order.IndexOf(_currentIndex));
+        _music[_active].loop = repeatMode == MusicRepeatMode.Track;
+    }
+
+    /// <summary>Copy a MusicPlaylist into the active state. Does not start playing.</summary>
+    private void LoadPlaylist(MusicPlaylist p)
+    {
+        playlist.Clear();
+        foreach (AudioClip c in p.Clips) if (c != null) playlist.Add(c);
+
+        shuffle = p.Shuffle;
+        repeatMode = p.RepeatMode;
+        _playlistVolume = Mathf.Clamp01(p.Volume);
+        CurrentPlaylistName = p.Name ?? "";
+        _lastPlayedIndex = -1;
+        _currentIndex = -1;
+        RebuildOrder(false);
+        OnPlaylistChanged?.Invoke(CurrentPlaylistName);
+    }
+
+    // ═════════════════════════ Playlist: push / pop ═════════════════════════
+
+    /// <summary>
+    /// Save what is playing (playlist, track and position), switch to a named playlist.
+    /// PopPlaylist() later brings the old music back exactly where it was. Returns false when the name is unknown.
+    /// </summary>
+    public bool PushPlaylist(string name, float fade = -1f)
+    {
+        if (!HasPlaylist(name))
+        {
+            Debug.LogWarning($"[AudioManager] Playlist '{name}' not found.");
+            return false;
+        }
+
+        _stack.Push(new MusicSnapshot
+        {
+            Name = CurrentPlaylistName,
+            Clips = new List<AudioClip>(playlist),
+            Shuffle = shuffle,
+            Repeat = repeatMode,
+            Volume = _playlistVolume,
+            Clip = _musicState != MusicState.Stopped ? _music[_active].clip : null,
+            Time = _musicState != MusicState.Stopped ? _music[_active].time : 0f
+        });
+
+        return PlayPlaylist(name, fade, true);
+    }
+
+    /// <summary>Return to the music saved by the last PushPlaylist. Returns false when the stack is empty.</summary>
+    public bool PopPlaylist(float fade = -1f)
+    {
+        if (_stack.Count == 0) return false;
+        MusicSnapshot s = _stack.Pop();
+
+        playlist.Clear();
+        playlist.AddRange(s.Clips);
+        shuffle = s.Shuffle;
+        repeatMode = s.Repeat;
+        _playlistVolume = s.Volume;
+        CurrentPlaylistName = s.Name;
+        _lastPlayedIndex = -1;
+        RebuildOrder(false);
+        OnPlaylistChanged?.Invoke(CurrentPlaylistName);
+
+        if (s.Clip == null)
+        {
+            if (playlist.Count > 0) PlayPlaylist(fade); else StopMusic(fade < 0f ? crossfadeDuration : fade);
+            return true;
+        }
+
+        _currentIndex = playlist.IndexOf(s.Clip);
+        if (_currentIndex >= 0)
+        {
+            _orderPos = Mathf.Max(0, _order.IndexOf(_currentIndex));
+            _lastPlayedIndex = _currentIndex;
+        }
+        StartClip(s.Clip, fade);
+        SeekMusic(s.Time);
+        return true;
+    }
+
+    // ═════════════════════════ Playlist: building / navigation ═════════════════════════
 
     public void AddToPlaylist(AudioClip clip)
     {
@@ -248,14 +523,6 @@ public class AudioManager : MonoBehaviour
         if (shuffle && _order.Count > _orderPos + 1)
             _order.Insert(RNG.GetInt(_orderPos + 1, _order.Count + 1), idx);
         else _order.Add(idx);
-    }
-
-    public void ClearPlaylist()
-    {
-        playlist.Clear();
-        _order.Clear();
-        _orderPos = -1;
-        _currentIndex = -1;
     }
 
     /// <summary>Start playlist from the beginning of the current order.</summary>
@@ -344,6 +611,7 @@ public class AudioManager : MonoBehaviour
         else _orderPos = -1;
     }
 
+    // ═════════════════════════ Music playback ═════════════════════════
 
     /// <summary>Play a clip that isn't necessarily in the playlist. When it ends, the playlist continues (if any).</summary>
     public void PlayMusic(AudioClip clip, float fade = -1f, bool loop = false)
@@ -367,7 +635,7 @@ public class AudioManager : MonoBehaviour
         _music[next].loop = forceLoop || repeatMode == MusicRepeatMode.Track;
         _music[next].time = 0f;
         _fade[next] = fade > 0f ? 0f : 1f;
-        _music[next].volume = _fade[next] * _duck;
+        _music[next].volume = _fade[next] * _duck * _playlistVolume;
         _music[next].Play();
 
         _active = next;
@@ -492,9 +760,10 @@ public class AudioManager : MonoBehaviour
     {
         for (int i = 0; i < 2; i++)
             if (_music[i].isPlaying || _musicState == MusicState.Paused)
-                _music[i].volume = _fade[i] * _duck;
+                _music[i].volume = _fade[i] * _duck * _playlistVolume;
     }
 
+    // ═════════════════════════ SFX ═════════════════════════
 
     /// <summary>Play a 2D sound effect. pitchRandom adds ± variation using your RNG.</summary>
     public AudioSource PlaySFX(AudioClip clip, float volume = 1f, float pitch = 1f, float pitchRandom = 0f)
@@ -558,6 +827,7 @@ public class AudioManager : MonoBehaviour
         return _sfxPool[_sfxCursor];
     }
 
+    // ═════════════════════════ Voice ═════════════════════════
 
     /// <summary>Play a voice line. interrupt=true clears the queue and cuts the current line.</summary>
     public void PlayVoice(AudioClip clip, bool interrupt = false, float volume = 1f)
@@ -608,6 +878,7 @@ public class AudioManager : MonoBehaviour
         _duck = Mathf.MoveTowards(_duck, target, duckSpeed * Time.unscaledDeltaTime);
     }
 
+    // ═════════════════════════ Global ═════════════════════════
 
     public void PauseAll() { PauseMusic(); PauseSFX(); PauseVoice(); }
     public void ResumeAll() { ResumeMusic(); ResumeSFX(); ResumeVoice(); }

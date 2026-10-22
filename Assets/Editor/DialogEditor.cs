@@ -19,7 +19,7 @@ public class DialoguesDrawer : PropertyDrawer
         float h = Line;
         if (!property.isExpanded) return h;
 
-        h += Line + Gap;                                   // name field
+        h += (Line + Gap) * 2;                             // name field + CanLoop
         var arr = property.FindPropertyRelative("dialog");
         for (int i = 0; i < arr.arraySize; i++)
         {
@@ -34,6 +34,7 @@ public class DialoguesDrawer : PropertyDrawer
     public override void OnGUI(Rect pos, SerializedProperty property, GUIContent label)
     {
         var nameProp = property.FindPropertyRelative("DialogueName");
+        var loopProp = property.FindPropertyRelative("CanLoop");
         var arr = property.FindPropertyRelative("dialog");
         var so = property.serializedObject;
         string path = property.propertyPath;
@@ -44,8 +45,12 @@ public class DialoguesDrawer : PropertyDrawer
         if (!property.isExpanded) return;
 
         EditorGUI.indentLevel++;
+
         r.y += Line + Gap;
         EditorGUI.PropertyField(r, nameProp);
+
+        r.y += Line + Gap;
+        EditorGUI.PropertyField(r, loopProp);
 
         int removeAt = -1, fixAt = -1;
         for (int i = 0; i < arr.arraySize; i++)

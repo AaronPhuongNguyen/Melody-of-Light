@@ -24,6 +24,8 @@ public readonly struct DialogueLineRef
 public class Dialogues
 {
     public string DialogueName = "Chapter 1";
+    [Tooltip("A looping dialogue can be played again and again. It is never marked as completed, so it never switches to the completed fallback.")]
+    public bool CanLoop = false;
 
     [SerializeReference] public DialoguesAsset[] dialog = Array.Empty<DialoguesAsset>();
 
@@ -37,7 +39,7 @@ public class Dialogues
 
 
     public bool IsCompleted =>
-    PlayerManager.Instance != null && PlayerManager.Instance.IsDialogueCompleted(DialogueName);
+    !CanLoop && PlayerManager.Instance != null && PlayerManager.Instance.IsDialogueCompleted(DialogueName);
     public int Count => dialog != null ? dialog.Length : 0;
 
     public DialoguesAsset this[int index] => dialog != null && index >= 0 && index < dialog.Length ? dialog[index] : null;

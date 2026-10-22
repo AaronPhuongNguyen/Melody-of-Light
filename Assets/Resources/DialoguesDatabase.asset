@@ -13,34 +13,136 @@ MonoBehaviour:
   m_Name: DialoguesDatabase
   m_EditorClassIdentifier: 
   dialogues:
-  - DialogueName: Demo
+  - DialogueName: chapter_1_0
+    CanLoop: 0
     dialog:
-    - rid: 1006844187255767040
+    - rid: 1006844197590269955
+    - rid: 1006844197590269956
+    - rid: 1006844197590269957
+    - rid: 1006844197590269959
+    - rid: 1006844197590269960
+    - rid: 1006844197590269961
+    - rid: 1006844197590269962
+    - rid: 1006844197590269963
   - DialogueName: Completed Dialogue
+    CanLoop: 1
     dialog:
-    - rid: 1006844187255767041
+    - rid: 1006844197590269958
   references:
     version: 2
     RefIds:
-    - rid: 1006844187255767040
-      type: {class: DialoguesAsset, ns: , asm: Assembly-CSharp}
+    - rid: 1006844197590269955
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
       data:
         SpeakerImage: {fileID: 21300000, guid: 336f8afe26bfa194b918b8990d427120, type: 3}
-        Speaker: System
-        Content: dia.welcome0
+        Speaker: ...
+        Content: story.chapter1_00
         AutoAdvanceDelay: -1
         Voice: {fileID: 0}
         TextSound: {fileID: 0}
         MuteTextSound: 0
         NextSound: {fileID: 0}
-    - rid: 1006844187255767041
+        Background: {fileID: 21300000, guid: d5b5000c6ebdd0748890bc20ebe4cfa5, type: 3}
+        BackgroundColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+    - rid: 1006844197590269956
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 0}
+        Speaker: ...
+        Content: story.chapter1_01
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+        Background: {fileID: 21300000, guid: 622d82db6b4a10b4f9a0af406fa0d91d, type: 3}
+        BackgroundColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+    - rid: 1006844197590269957
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 21300000, guid: ed03e87f0f29852488fd7eaa988a4ab2, type: 3}
+        Speaker: Player
+        Content: story.chapter1_02
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+        Background: {fileID: 21300000, guid: 622d82db6b4a10b4f9a0af406fa0d91d, type: 3}
+        BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    - rid: 1006844197590269958
       type: {class: DialoguesAsset, ns: , asm: Assembly-CSharp}
       data:
         SpeakerImage: {fileID: 21300000, guid: 336f8afe26bfa194b918b8990d427120, type: 3}
-        Speaker: System
+        Speaker: ...
         Content: dia.completed0
         AutoAdvanceDelay: -1
         Voice: {fileID: 0}
         TextSound: {fileID: 0}
         MuteTextSound: 0
         NextSound: {fileID: 0}
+    - rid: 1006844197590269959
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 21300000, guid: a26a13bcb24e01b47a499ae164ef6b1f, type: 3}
+        Speaker: Player
+        Content: story.chapter1_03
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+        Background: {fileID: 21300000, guid: d5b5000c6ebdd0748890bc20ebe4cfa5, type: 3}
+        BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    - rid: 1006844197590269960
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 0}
+        Speaker: ...
+        Content: story.chapter1_04
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+        Background: {fileID: 21300000, guid: 3eee88a52fc2151409263a9ec68e2fdb, type: 3}
+        BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    - rid: 1006844197590269961
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 21300000, guid: ed03e87f0f29852488fd7eaa988a4ab2, type: 3}
+        Speaker: Player
+        Content: story.chapter1_05
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+        Background: {fileID: 21300000, guid: 3eee88a52fc2151409263a9ec68e2fdb, type: 3}
+        BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    - rid: 1006844197590269962
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 21300000, guid: a26a13bcb24e01b47a499ae164ef6b1f, type: 3}
+        Speaker: Player
+        Content: story.chapter1_06
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+        Background: {fileID: 21300000, guid: 3eee88a52fc2151409263a9ec68e2fdb, type: 3}
+        BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+    - rid: 1006844197590269963
+      type: {class: MainStoryDialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 0}
+        Speaker: ...
+        Content: story.chapter1_07
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+        Background: {fileID: 21300000, guid: d5b5000c6ebdd0748890bc20ebe4cfa5, type: 3}
+        BackgroundColor: {r: 1, g: 1, b: 1, a: 1}

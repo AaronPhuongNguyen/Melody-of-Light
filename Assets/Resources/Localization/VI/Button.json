@@ -2,5 +2,8 @@
 	"gameplay":{
 		"rest":"Nghỉ ngơi",
 		"isResting":"Đang nghỉ ngơi",
+
+		"hangout":"Ra ngoài",
+		"hangingout":"Đang ra ngoài",
 	}
 }

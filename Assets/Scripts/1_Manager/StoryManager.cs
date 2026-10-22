@@ -41,6 +41,8 @@ public class StoryTeller : MonoBehaviour
     public PlayableDirector playableDirector;
     [Tooltip("When a dialogue that is already completed is started again, this one plays instead (if it exists).")]
     public bool FallbackWhenCompleted = true;
+    [Tooltip("Only used when 'Fallback When Completed' is OFF. A completed dialogue then does nothing instead of playing again. Dialogues with CanLoop are never completed, so they always play.")]
+    public bool NothingWhenCompleted = true;
     public string CompletedFallbackName = "dia.completed0";
 
     [Header("Visual")]
@@ -200,6 +202,9 @@ public class StoryTeller : MonoBehaviour
 
         if (director == null) { director = playableDirector; playableDirector = null; } // registered director is used once
 
+        if (!FallbackWhenCompleted && NothingWhenCompleted && dialogues.IsCompleted)
+            return false; // before the interrupt/queue logic, so a blocked dialogue never cuts the one that is playing
+
         if (IsPlaying)
         {
             if (!interrupt)
@@ -358,15 +363,15 @@ public class StoryTeller : MonoBehaviour
         onDialogueEnded?.Invoke();
 
         if (resumeDirector && dir != null && paused && dir.playableGraph.IsValid()) dir.Resume();
+        // Natural end or Skip() counts as completed; an interrupt does not. Looping dialogues never complete.
+        if (startQueued && finished != null && !finished.CanLoop && finished.DialogueName != CompletedFallbackName)
+            PlayerManager.Instance?.CompleteDialogue(finished.DialogueName);
 
         if (startQueued && _queue.Count > 0)
         {
             Pending p = _queue.Dequeue();
             StartDialogue(p.dialogues, p.director, p.start);
         }
-        // Natural end or Skip() counts as completed; an interrupt does not.
-        if (startQueued && finished != null && finished.DialogueName != CompletedFallbackName)
-            PlayerManager.Instance?.CompleteDialogue(finished.DialogueName);
     }
 
     // ═════════════════════════ Variables ═════════════════════════
