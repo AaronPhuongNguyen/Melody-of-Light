@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
-    public PlayerData Data { get; private set; }
+    public PlayerData Data;
     public bool AutoSaveOnDialogueCompleted = true;
 
     private void Awake()
@@ -17,6 +17,9 @@ public class PlayerManager : MonoBehaviour
 
     [ContextMenu("Try Save")]
     public void Save() => SaveSystem.Save(Data);
+
+    [ContextMenu("Try new game")]
+    public void NewGame() => Data = new PlayerData();
 
     public bool IsDialogueCompleted(string name) => Data.IsDialogueCompleted(name);
 

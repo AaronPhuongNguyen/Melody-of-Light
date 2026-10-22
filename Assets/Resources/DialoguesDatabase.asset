@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: DialoguesDatabase
   m_EditorClassIdentifier: 
   dialogues:
-  - DialogueName: Completed Dialogue
+  - DialogueName: Demo
     dialog:
     - rid: 1006844187255767040
+  - DialogueName: Completed Dialogue
+    dialog:
+    - rid: 1006844187255767041
   references:
     version: 2
     RefIds:
@@ -24,7 +27,18 @@ MonoBehaviour:
       data:
         SpeakerImage: {fileID: 21300000, guid: 336f8afe26bfa194b918b8990d427120, type: 3}
         Speaker: System
-        Content: dia.completing0
+        Content: dia.welcome0
+        AutoAdvanceDelay: -1
+        Voice: {fileID: 0}
+        TextSound: {fileID: 0}
+        MuteTextSound: 0
+        NextSound: {fileID: 0}
+    - rid: 1006844187255767041
+      type: {class: DialoguesAsset, ns: , asm: Assembly-CSharp}
+      data:
+        SpeakerImage: {fileID: 21300000, guid: 336f8afe26bfa194b918b8990d427120, type: 3}
+        Speaker: System
+        Content: dia.completed0
         AutoAdvanceDelay: -1
         Voice: {fileID: 0}
         TextSound: {fileID: 0}

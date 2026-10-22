@@ -374,5 +374,50 @@ public class DialoguesDatabase : ScriptableObject
     }
 
     private void OnEnable() => InvalidateLookup();
-    private void OnValidate() => InvalidateLookup();
+    private void OnValidate()
+    {
+        InvalidateLookup();
+#if UNITY_EDITOR
+        SeparateSharedLines();
+#endif
+    }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// Unity's list "+" button copies the last element, and [SerializeReference] lines are then shared by both copies.
+    /// Every line object that appears more than once gets its own clone, so editing one dialogue no longer changes another.
+    /// </summary>
+    private void SeparateSharedLines()
+    {
+        if (dialogues == null) return;
+
+        var seen = new HashSet<DialoguesAsset>(); // DialoguesAsset has no Equals override, so this compares references
+        bool changed = false;
+
+        foreach (Dialogues d in dialogues)
+        {
+            if (d == null || d.dialog == null) continue;
+            for (int i = 0; i < d.dialog.Length; i++)
+            {
+                DialoguesAsset line = d.dialog[i];
+                if (line == null || seen.Add(line)) continue;
+
+                DialoguesAsset copy = CloneLine(line);
+                d.dialog[i] = copy;
+                seen.Add(copy);
+                changed = true;
+            }
+        }
+
+        if (changed) UnityEditor.EditorUtility.SetDirty(this);
+    }
+
+    private static DialoguesAsset CloneLine(DialoguesAsset source)
+    {
+        var copy = (DialoguesAsset)Activator.CreateInstance(source.GetType());
+        // EditorJsonUtility keeps Unity object references (Sprite, AudioClip) intact
+        UnityEditor.EditorJsonUtility.FromJsonOverwrite(UnityEditor.EditorJsonUtility.ToJson(source), copy);
+        return copy;
+    }
+#endif
 }

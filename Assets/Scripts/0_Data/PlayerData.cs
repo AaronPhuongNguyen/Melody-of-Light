@@ -10,7 +10,15 @@ public class PlayerData
     public bool IsCreated = false;
     public string PlayerName;
 
-    //advanced Data that would be added later, just ignore now.
+    //advanced/gameplay Data
+    public int Day = 0; // how many days have passed in game, very important for game events and logic
+    public int AtPeakDayInterval = 6; //in this day, player works 200% Faster and doubled the max energy
+
+    public int Energy = 3;//resource for many actions
+    public int MaxEnergy = 3;
+
+    public int Money = 1000; //Main currency in game
+
     #endregion
 
     // Saved: names of every completed dialogue.
