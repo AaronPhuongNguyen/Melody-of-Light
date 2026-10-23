@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 /// <summary>How Play() chooses between the entries.</summary>
 public enum StoryPickMode
@@ -21,11 +22,47 @@ public enum StoryEndOfList { Stop, Loop, RepeatLast }
 /// <summary>What happens when the StoryTeller is already playing something.</summary>
 public enum StoryBusyBehaviour { Queue, Ignore, Interrupt }
 
+/// <summary>What a bound Button does when clicked.</summary>
+public enum StoryButtonAction
+{
+    Play,                // by PickMode
+    PlayNext,
+    PlayRandom,
+    PlayFirstAvailable,
+    PlayHighestPriority,
+    PlayKey,             // Key = entry id or dialogue name (ignores conditions)
+    PlayIndex,           // Index = entry index (ignores conditions)
+    PlayKeyIfAvailable,  // Key, but only if its conditions pass
+    Interrupt,           // Key, ends whatever is playing first
+    Stop,
+    Next,
+    ResetProgress,
+    EnableEntry,         // Key
+    DisableEntry,        // Key
+    ToggleEntry          // Key
+}
+
 [Serializable]
 public class StoryVariable
 {
     public string Name;
     public string Value;
+}
+
+/// <summary>A Button wired to a commander action without touching the OnClick list.</summary>
+[Serializable]
+public class StoryButtonBinding
+{
+    public Button Button;
+    public StoryButtonAction Action = StoryButtonAction.Play;
+    [Tooltip("Entry id / dialogue name for the *Key actions.")]
+    public string Key;
+    [Tooltip("Entry index for PlayIndex.")]
+    public int Index;
+    [Tooltip("Button is only interactable while the action can actually do something.")]
+    public bool AutoInteractable = true;
+
+    [NonSerialized] public UnityAction Listener;
 }
 
 /// <summary>One playable story of a commander: a database dialogue plus the conditions for it to be available.</summary>
@@ -47,9 +84,27 @@ public class StoryEntry
     [Tooltip("After it has been played once, it is no longer available until ResetProgress().")]
     public bool OncePerSession = false;
 
-    [Header("Conditions (checked against PlayerData)")]
+    [Header("Conditions: Day (checked against PlayerData)")]
     [Min(0)] public int MinDay = 0;
     [Tooltip("-1 = no upper limit.")] public int MaxDay = -1;
+    [Tooltip("Only available when Day is a multiple of this (e.g. 6 = day 0, 6, 12...). 0 = off.")]
+    [Min(0)] public int DayEvery = 0;
+
+    [Header("Conditions: Energy")]
+    [Min(0)] public int MinEnergy = 0;
+    [Tooltip("-1 = no upper limit.")] public int MaxEnergy = -1;
+    [Tooltip("Needs at least this much energy, and it is spent when the story starts.")]
+    [Min(0)] public int EnergyCost = 0;
+
+    [Header("Conditions: Money")]
+    public int MinMoney = 0;
+    [Tooltip("-1 = no upper limit.")] public int MaxMoney = -1;
+    [Tooltip("Needs at least this much money, and it is spent when the story starts.")]
+    [Min(0)] public int MoneyCost = 0;
+
+    [Header("Conditions: Progress")]
+    [Tooltip("Total number of completed dialogues in the save needed.")]
+    [Min(0)] public int MinCompletedDialogues = 0;
     public string[] RequireCompleted;
     public string[] RequireNotCompleted;
 
@@ -63,25 +118,63 @@ public class StoryEntry
 
     public string Key => string.IsNullOrEmpty(Id) ? DialogueName : Id;
 
-    public bool IsAvailable()
+    public bool IsAvailable() => Check(false, out _);
+
+    /// <summary>Null when available, otherwise a short text saying which condition failed.</summary>
+    public string WhyUnavailable() => Check(true, out string reason) ? null : reason;
+
+    private bool Check(bool wantReason, out string reason)
     {
-        if (!Enabled || string.IsNullOrEmpty(DialogueName)) return false;
-        if (OncePerSession && PlayCount > 0) return false;
+        reason = null;
+
+        if (!Enabled) { if (wantReason) reason = "disabled"; return false; }
+        if (string.IsNullOrEmpty(DialogueName)) { if (wantReason) reason = "no dialogue name"; return false; }
+        if (OncePerSession && PlayCount > 0) { if (wantReason) reason = "already played (OncePerSession)"; return false; }
 
         PlayerData data = PlayerManager.Instance != null ? PlayerManager.Instance.Data : null;
         if (data != null)
         {
-            if (data.Day < MinDay) return false;
-            if (MaxDay >= 0 && data.Day > MaxDay) return false;
+            if (data.Day < MinDay) { if (wantReason) reason = $"day {data.Day} < MinDay {MinDay}"; return false; }
+            if (MaxDay >= 0 && data.Day > MaxDay) { if (wantReason) reason = $"day {data.Day} > MaxDay {MaxDay}"; return false; }
+            if (DayEvery > 0 && data.Day % DayEvery != 0) { if (wantReason) reason = $"day {data.Day} is not a multiple of {DayEvery}"; return false; }
+
+            if (data.Energy < MinEnergy) { if (wantReason) reason = $"energy {data.Energy} < MinEnergy {MinEnergy}"; return false; }
+            if (MaxEnergy >= 0 && data.Energy > MaxEnergy) { if (wantReason) reason = $"energy {data.Energy} > MaxEnergy {MaxEnergy}"; return false; }
+            if (data.Energy < EnergyCost) { if (wantReason) reason = $"energy {data.Energy} < cost {EnergyCost}"; return false; }
+
+            if (data.Money < MinMoney) { if (wantReason) reason = $"money {data.Money} < MinMoney {MinMoney}"; return false; }
+            if (MaxMoney >= 0 && data.Money > MaxMoney) { if (wantReason) reason = $"money {data.Money} > MaxMoney {MaxMoney}"; return false; }
+            if (data.Money < MoneyCost) { if (wantReason) reason = $"money {data.Money} < cost {MoneyCost}"; return false; }
+
+            if (data.CompletedCount < MinCompletedDialogues)
+            {
+                if (wantReason) reason = $"completed {data.CompletedCount} < {MinCompletedDialogues}";
+                return false;
+            }
+
             if (RequireCompleted != null)
                 foreach (string n in RequireCompleted)
-                    if (!string.IsNullOrEmpty(n) && !data.IsDialogueCompleted(n)) return false;
+                    if (!string.IsNullOrEmpty(n) && !data.IsDialogueCompleted(n))
+                    { if (wantReason) reason = $"requires '{n}' completed"; return false; }
+
             if (RequireNotCompleted != null)
                 foreach (string n in RequireNotCompleted)
-                    if (!string.IsNullOrEmpty(n) && data.IsDialogueCompleted(n)) return false;
+                    if (!string.IsNullOrEmpty(n) && data.IsDialogueCompleted(n))
+                    { if (wantReason) reason = $"requires '{n}' NOT completed"; return false; }
         }
 
-        return Condition == null || Condition();
+        if (Condition != null && !Condition()) { if (wantReason) reason = "code Condition returned false"; return false; }
+        return true;
+    }
+
+    /// <summary>Spends EnergyCost / MoneyCost. Called by the commander when the story really starts.</summary>
+    public void ApplyCosts()
+    {
+        if (EnergyCost <= 0 && MoneyCost <= 0) return;
+        PlayerData data = PlayerManager.Instance != null ? PlayerManager.Instance.Data : null;
+        if (data == null) return;
+        if (EnergyCost > 0) data.Energy = Mathf.Max(0, data.Energy - EnergyCost);
+        if (MoneyCost > 0) data.Money = Mathf.Max(0, data.Money - MoneyCost);
     }
 
     public override string ToString() => $"{Key} (p{Priority})";
@@ -99,13 +192,17 @@ public class StoryEntry
 ///   commander.AddEntry("night_talk", minDay: 3).Condition = () => hasKey;
 ///   yield return commander.WaitUntilFinished();        // inside a coroutine
 ///
+/// Buttons (two ways):
+///   1) Button OnClick -> drag the commander -> pick any "UI_..." method (UI_Play, UI_PlayKey(string), UI_Stop...).
+///   2) Fill the "Button Bindings" list: Button + Action (+ Key / Index). No OnClick wiring needed.
+///
 /// Triggers (optional): on start, on enable, on trigger enter (3D/2D), on click (UI or physics raycaster).
-/// Right-click the component header in Play mode ? Test/... to try everything.
+/// Right-click the component header in Play mode -> Test/... to try everything.
 /// </summary>
 [DisallowMultipleComponent]
-public class StoryCommander : MonoBehaviour
+public class StoryCommander : MonoBehaviour, IPointerClickHandler
 {
-    // ????????????? settings ?????????????
+    // ------------- settings -------------
     [Header("Teller")]
     [Tooltip("Empty = StoryTeller.Instance.")]
     [SerializeField] private StoryTeller teller;
@@ -123,7 +220,7 @@ public class StoryCommander : MonoBehaviour
     public float Cooldown = 0f;
 
     [Header("Variables (set on the StoryTeller before every play)")]
-    [Tooltip("Sets {player}, {day} and {money} from PlayerData.")]
+    [Tooltip("Sets {player}, {day}, {money} and {energy} from PlayerData.")]
     public bool AutoVariables = true;
     public List<StoryVariable> Variables = new List<StoryVariable>();
 
@@ -138,12 +235,15 @@ public class StoryCommander : MonoBehaviour
     [Min(0f), Tooltip("Delay applied to the automatic triggers above.")]
     public float TriggerDelay = 0f;
 
+    [Header("Button Bindings")]
+    public List<StoryButtonBinding> ButtonBindings = new List<StoryButtonBinding>();
+
     [Header("Events")]
     public UnityEvent onStarted;
     public UnityEvent onEnded;
     public UnityEvent onNothingAvailable;
 
-    [Header("Test (right-click the component header ? Test/...)")]
+    [Header("Test (right-click the component header -> Test/...)")]
     public string TestKey = "";
     public string TestDialogueName = "Chapter 1";
     [Min(0f)] public float TestDelay = 2f;
@@ -154,7 +254,7 @@ public class StoryCommander : MonoBehaviour
     public event Action<StoryEntry> Ended;
     public event Action NothingAvailable;
 
-    // ????????????? state ?????????????
+    // ------------- state -------------
     private class Active
     {
         public Dialogues Original, Effective;
@@ -169,6 +269,9 @@ public class StoryCommander : MonoBehaviour
     private int _cursor;
     private float _lastPlay = -999f;
     private bool _triggered;
+    private bool _hasAutoButtons;
+    private float _nextButtonRefresh;
+    private StoryEntry _lastEntry;
 
     public StoryTeller Teller { get => teller != null ? teller : StoryTeller.Instance; set => teller = value; }
     /// <summary>Something of this commander is queued or playing.</summary>
@@ -176,6 +279,8 @@ public class StoryCommander : MonoBehaviour
     /// <summary>Something of this commander is on screen right now.</summary>
     public bool IsPlaying => _active.Exists(a => a.Started);
     public int EntryCount => Entries.Count;
+    /// <summary>The last entry this commander played (null if none / ad-hoc).</summary>
+    public StoryEntry LastEntry => _lastEntry;
 
     public int AvailableCount
     {
@@ -184,11 +289,17 @@ public class StoryCommander : MonoBehaviour
 
     public bool HasAvailable => AvailableCount > 0;
 
-    // ????????????????????????? Unity ?????????????????????????
+    // ========================= Unity =========================
 
     private void OnEnable()
     {
+        BindButtons();
         if (PlayOnEnable) StartCoroutine(AutoRoutine());
+    }
+
+    private void OnDisable()
+    {
+        UnbindButtons();
     }
 
     private void Start()
@@ -196,8 +307,16 @@ public class StoryCommander : MonoBehaviour
         if (PlayOnStart) StartCoroutine(AutoRoutine());
     }
 
+    private void Update()
+    {
+        if (!_hasAutoButtons || Time.unscaledTime < _nextButtonRefresh) return;
+        _nextButtonRefresh = Time.unscaledTime + 0.25f;
+        RefreshButtons();
+    }
+
     private void OnDestroy()
     {
+        UnbindButtons();
         Unhook();
         _active.Clear();
     }
@@ -226,14 +345,10 @@ public class StoryCommander : MonoBehaviour
         Play();
     }
 
-    // ????????????????????????? Play: by pick mode ?????????????????????????
+    // ========================= Play: by pick mode =========================
 
     /// <summary>Pick an entry by PickMode and play it. Returns false when nothing was started.</summary>
-    public bool Play(Action onDone = null)
-    {
-        StoryEntry e = Pick(PickMode, true);
-        return e != null ? RunEntry(e, onDone, Busy) : HandleNothing(onDone);
-    }
+    public bool Play(Action onDone = null) => PlayPicked(PickMode, onDone);
 
     public bool PlayNext(Action onDone = null) => PlayPicked(StoryPickMode.Sequence, onDone);
     public bool PlayRandom(Action onDone = null) => PlayPicked(StoryPickMode.Random, onDone);
@@ -257,7 +372,7 @@ public class StoryCommander : MonoBehaviour
         then?.Invoke();
     }
 
-    // ????????????????????????? Play: explicit ?????????????????????????
+    // ========================= Play: explicit =========================
 
     /// <summary>
     /// Play a specific entry by its Id / dialogue name. Conditions are ignored (you asked for it explicitly).
@@ -267,6 +382,13 @@ public class StoryCommander : MonoBehaviour
     {
         StoryEntry e = FindEntry(key);
         return e != null ? RunEntry(e, onDone, Busy) : PlayDialogue(key, null, 0, onDone);
+    }
+
+    /// <summary>Play an entry only if its conditions pass.</summary>
+    public bool PlayIfAvailable(string key, Action onDone = null)
+    {
+        StoryEntry e = FindEntry(key);
+        return e != null && e.IsAvailable() && RunEntry(e, onDone, Busy);
     }
 
     public bool Play(int entryIndex, Action onDone = null)
@@ -283,6 +405,9 @@ public class StoryCommander : MonoBehaviour
 
     /// <summary>Play any Dialogues object (also ones built in code).</summary>
     public bool Play(Dialogues dialogues, Action onDone = null) => RunDialogue(dialogues, null, null, 0, onDone, Busy);
+
+    /// <summary>Play the entry that was played last again (ignores conditions).</summary>
+    public bool Replay(Action onDone = null) => _lastEntry != null && RunEntry(_lastEntry, onDone, Busy);
 
     /// <summary>Play a database dialogue directly, without an entry.</summary>
     public bool PlayDialogue(string dialogueName, PlayableDirector director = null, int startLine = 0, Action onDone = null)
@@ -319,7 +444,7 @@ public class StoryCommander : MonoBehaviour
         return RunDialogue(d, null, null, 0, null, Busy);
     }
 
-    // ????????????????????????? Control ?????????????????????????
+    // ========================= Control =========================
 
     /// <summary>End the dialogue of this commander if it is the one on screen, and cancel delayed plays.</summary>
     public void Stop()
@@ -337,7 +462,152 @@ public class StoryCommander : MonoBehaviour
     /// <summary>Coroutine helper: yield return commander.WaitUntilFinished();</summary>
     public WaitUntil WaitUntilFinished() => new WaitUntil(() => !IsActive);
 
-    // ????????????????????????? Entries ?????????????????????????
+    // ========================= Button-friendly methods =========================
+    // UnityEvent (Button OnClick, etc.) only lists public void methods with 0 or 1 parameter
+    // of type string / int / float / bool / Object, so these are thin wrappers of the API above.
+
+    public void UI_Play() => Play();
+    public void UI_PlayNext() => PlayNext();
+    public void UI_PlayRandom() => PlayRandom();
+    public void UI_PlayFirstAvailable() => PlayFirstAvailable();
+    public void UI_PlayHighestPriority() => PlayHighestPriority();
+    public void UI_Replay() => Replay();
+
+    /// <summary>Entry id or dialogue name. Ignores conditions.</summary>
+    public void UI_PlayKey(string key) => Play(key);
+    /// <summary>Entry id or dialogue name, only when its conditions pass.</summary>
+    public void UI_PlayKeyIfAvailable(string key) => PlayIfAvailable(key);
+    public void UI_PlayIndex(int entryIndex) => Play(entryIndex);
+    /// <summary>A dialogue of the database, without an entry.</summary>
+    public void UI_PlayDialogue(string dialogueName) => PlayDialogue(dialogueName);
+    public void UI_Interrupt(string key) => Interrupt(key);
+    public void UI_PlayAfterSeconds(float seconds) => PlayAfter(seconds);
+
+    public void UI_Stop() => Stop();
+    public void UI_Next() => Next();
+    public void UI_ResetProgress() => ResetProgress();
+    public void UI_ResetTrigger() => _triggered = false;
+
+    public void UI_EnableEntry(string key) => SetEntryEnabled(key, true);
+    public void UI_DisableEntry(string key) => SetEntryEnabled(key, false);
+    public void UI_ToggleEntry(string key) => ToggleEntry(key);
+    public void UI_EnableAllEntries() => SetAllEntriesEnabled(true);
+    public void UI_DisableAllEntries() => SetAllEntriesEnabled(false);
+
+    /// <summary>0 = Sequence, 1 = FirstAvailable, 2 = Priority, 3 = Random.</summary>
+    public void UI_SetPickMode(int mode) => PickMode = (StoryPickMode)Mathf.Clamp(mode, 0, 3);
+    /// <summary>0 = Stop, 1 = Loop, 2 = RepeatLast.</summary>
+    public void UI_SetEndOfList(int mode) => EndOfList = (StoryEndOfList)Mathf.Clamp(mode, 0, 2);
+    /// <summary>0 = Queue, 1 = Ignore, 2 = Interrupt.</summary>
+    public void UI_SetBusyBehaviour(int mode) => Busy = (StoryBusyBehaviour)Mathf.Clamp(mode, 0, 2);
+    public void UI_SetCooldown(float seconds) => Cooldown = Mathf.Max(0f, seconds);
+
+    /// <summary>One text field "name=value", e.g. "npc=Ann". Applied before every play.</summary>
+    public void UI_SetVariable(string pair)
+    {
+        if (string.IsNullOrEmpty(pair)) return;
+        int i = pair.IndexOf('=');
+        if (i <= 0) return;
+        SetVariable(pair.Substring(0, i).Trim(), pair.Substring(i + 1).Trim());
+    }
+
+    public void UI_ClearVariables() => ClearVariables();
+
+    // ========================= Button bindings =========================
+
+    private void BindButtons()
+    {
+        _hasAutoButtons = false;
+        foreach (StoryButtonBinding b in ButtonBindings)
+        {
+            if (b == null || b.Button == null) continue;
+            StoryButtonBinding captured = b;
+            if (b.Listener != null) b.Button.onClick.RemoveListener(b.Listener);
+            b.Listener = () => ExecuteBinding(captured);
+            b.Button.onClick.AddListener(b.Listener);
+            if (b.AutoInteractable) _hasAutoButtons = true;
+        }
+        RefreshButtons();
+    }
+
+    private void UnbindButtons()
+    {
+        foreach (StoryButtonBinding b in ButtonBindings)
+        {
+            if (b == null || b.Button == null || b.Listener == null) continue;
+            b.Button.onClick.RemoveListener(b.Listener);
+            b.Listener = null;
+        }
+        _hasAutoButtons = false;
+    }
+
+    private void ExecuteBinding(StoryButtonBinding b)
+    {
+        switch (b.Action)
+        {
+            case StoryButtonAction.Play: Play(); break;
+            case StoryButtonAction.PlayNext: PlayNext(); break;
+            case StoryButtonAction.PlayRandom: PlayRandom(); break;
+            case StoryButtonAction.PlayFirstAvailable: PlayFirstAvailable(); break;
+            case StoryButtonAction.PlayHighestPriority: PlayHighestPriority(); break;
+            case StoryButtonAction.PlayKey: Play(b.Key); break;
+            case StoryButtonAction.PlayIndex: Play(b.Index); break;
+            case StoryButtonAction.PlayKeyIfAvailable: PlayIfAvailable(b.Key); break;
+            case StoryButtonAction.Interrupt: Interrupt(b.Key); break;
+            case StoryButtonAction.Stop: Stop(); break;
+            case StoryButtonAction.Next: Next(); break;
+            case StoryButtonAction.ResetProgress: ResetProgress(); break;
+            case StoryButtonAction.EnableEntry: SetEntryEnabled(b.Key, true); break;
+            case StoryButtonAction.DisableEntry: SetEntryEnabled(b.Key, false); break;
+            case StoryButtonAction.ToggleEntry: ToggleEntry(b.Key); break;
+        }
+        RefreshButtons();
+    }
+
+    /// <summary>Updates Button.interactable of the bindings that have AutoInteractable.</summary>
+    public void RefreshButtons()
+    {
+        foreach (StoryButtonBinding b in ButtonBindings)
+        {
+            if (b == null || b.Button == null || !b.AutoInteractable) continue;
+            b.Button.interactable = CanRun(b);
+        }
+    }
+
+    private bool CanRun(StoryButtonBinding b)
+    {
+        switch (b.Action)
+        {
+            case StoryButtonAction.Play:
+            case StoryButtonAction.PlayNext:
+            case StoryButtonAction.PlayRandom:
+            case StoryButtonAction.PlayFirstAvailable:
+            case StoryButtonAction.PlayHighestPriority:
+                return HasAvailable || !string.IsNullOrEmpty(NothingAvailableDialogue);
+
+            case StoryButtonAction.PlayKeyIfAvailable:
+                return IsAvailable(b.Key);
+
+            case StoryButtonAction.PlayKey:
+            case StoryButtonAction.Interrupt:
+            case StoryButtonAction.EnableEntry:
+            case StoryButtonAction.DisableEntry:
+            case StoryButtonAction.ToggleEntry:
+                return !string.IsNullOrEmpty(b.Key);
+
+            case StoryButtonAction.PlayIndex:
+                return b.Index >= 0 && b.Index < Entries.Count && Entries[b.Index] != null;
+
+            case StoryButtonAction.Stop:
+            case StoryButtonAction.Next:
+                return IsPlaying;
+
+            default:
+                return true;
+        }
+    }
+
+    // ========================= Entries =========================
 
     public StoryEntry FindEntry(string key)
     {
@@ -361,7 +631,8 @@ public class StoryCommander : MonoBehaviour
     }
 
     public StoryEntry AddEntry(string dialogueName, string id = null, int minDay = 0, int maxDay = -1,
-                               int priority = 0, bool oncePerSession = false)
+                               int priority = 0, bool oncePerSession = false,
+                               int minEnergy = 0, int minMoney = 0, int energyCost = 0, int moneyCost = 0)
     {
         var e = new StoryEntry
         {
@@ -370,7 +641,11 @@ public class StoryCommander : MonoBehaviour
             MinDay = minDay,
             MaxDay = maxDay,
             Priority = priority,
-            OncePerSession = oncePerSession
+            OncePerSession = oncePerSession,
+            MinEnergy = minEnergy,
+            MinMoney = minMoney,
+            EnergyCost = energyCost,
+            MoneyCost = moneyCost
         };
         Entries.Add(e);
         return e;
@@ -388,6 +663,19 @@ public class StoryCommander : MonoBehaviour
         if (e == null) return false;
         e.Enabled = enabled;
         return true;
+    }
+
+    public bool ToggleEntry(string key)
+    {
+        StoryEntry e = FindEntry(key);
+        if (e == null) return false;
+        e.Enabled = !e.Enabled;
+        return true;
+    }
+
+    public void SetAllEntriesEnabled(bool enabled)
+    {
+        foreach (StoryEntry e in Entries) if (e != null) e.Enabled = enabled;
     }
 
     /// <summary>Back to the first entry; clears the OncePerSession counters.</summary>
@@ -411,7 +699,7 @@ public class StoryCommander : MonoBehaviour
         }
     }
 
-    // ????????????????????????? Variables ?????????????????????????
+    // ========================= Variables =========================
 
     /// <summary>Set from code; applied to the StoryTeller before every play of this commander.</summary>
     public void SetVariable(string name, object value)
@@ -432,6 +720,8 @@ public class StoryCommander : MonoBehaviour
                 if (!string.IsNullOrEmpty(data.PlayerName)) t.SetVariable("player", data.PlayerName);
                 t.SetVariable("day", data.Day);
                 t.SetVariable("money", data.Money);
+                t.SetVariable("energy", data.Energy);
+                t.SetVariable("maxenergy", data.MaxEnergy);
             }
         }
         foreach (StoryVariable v in Variables)
@@ -439,7 +729,7 @@ public class StoryCommander : MonoBehaviour
         foreach (var kv in _runtimeVars) t.SetVariable(kv.Key, kv.Value);
     }
 
-    // ????????????????????????? Picking ?????????????????????????
+    // ========================= Picking =========================
 
     /// <summary>Choose an entry without playing it. 'advance' moves the Sequence cursor.</summary>
     public StoryEntry Pick(StoryPickMode mode, bool advance = false)
@@ -508,7 +798,7 @@ public class StoryCommander : MonoBehaviour
         return !string.IsNullOrEmpty(NothingAvailableDialogue) && PlayDialogue(NothingAvailableDialogue, null, 0, onDone);
     }
 
-    // ????????????????????????? Running ?????????????????????????
+    // ========================= Running =========================
 
     private bool RunEntry(StoryEntry e, Action onDone, StoryBusyBehaviour busy)
     {
@@ -516,7 +806,7 @@ public class StoryCommander : MonoBehaviour
         StoryTeller t = Teller;
         if (t == null || t.dialoguesDatabase == null || !t.dialoguesDatabase.TryGet(e.DialogueName, out Dialogues d))
         {
-            Debug.LogWarning($"[StoryCommander] Dialogue '{(e != null ? e.DialogueName : "?")}' not found.", this);
+            Debug.LogWarning($"[StoryCommander] Dialogue '{e.DialogueName}' not found.", this);
             return false;
         }
         return RunDialogue(d, e, e.Director != null ? e.Director : DefaultDirector, e.StartLine, onDone, busy);
@@ -545,7 +835,13 @@ public class StoryCommander : MonoBehaviour
         }
 
         _lastPlay = Time.unscaledTime;
-        if (entry != null) entry.PlayCount++;
+        if (entry != null)
+        {
+            entry.PlayCount++;
+            entry.ApplyCosts();
+            _lastEntry = entry;
+        }
+        RefreshButtons();
         return true;
     }
 
@@ -558,7 +854,7 @@ public class StoryCommander : MonoBehaviour
         return d;
     }
 
-    // ????????????????????????? StoryTeller hooks ?????????????????????????
+    // ========================= StoryTeller hooks =========================
 
     private void Hook(StoryTeller t)
     {
@@ -590,6 +886,7 @@ public class StoryCommander : MonoBehaviour
         a.Entry?.OnStarted?.Invoke();
         onStarted?.Invoke();
         Started?.Invoke(a.Entry);
+        RefreshButtons();
     }
 
     private void OnTellerEnded(Dialogues d)
@@ -602,9 +899,10 @@ public class StoryCommander : MonoBehaviour
         onEnded?.Invoke();
         Ended?.Invoke(a.Entry);
         a.Done?.Invoke();
+        RefreshButtons();
     }
 
-    // ????????????????????????? Context menu tests ?????????????????????????
+    // ========================= Context menu tests =========================
 
     #region Context Menu Tests
     private bool TestPlaying()
@@ -617,28 +915,34 @@ public class StoryCommander : MonoBehaviour
     private static void TLog(string m) => Debug.Log("[StoryCommander/Test] " + m);
 
     [ContextMenu("Test/Play (by PickMode)")]
-    private void TestPlay() { if (TestPlaying()) TLog($"Play ({PickMode}) ? {Play(() => TLog("   done"))}"); }
+    private void TestPlay() { if (TestPlaying()) TLog($"Play ({PickMode}) -> {Play(() => TLog("   done"))}"); }
 
     [ContextMenu("Test/Play/Next in sequence")]
-    private void TestNextInSequence() { if (TestPlaying()) TLog($"PlayNext ? {PlayNext()}"); }
+    private void TestNextInSequence() { if (TestPlaying()) TLog($"PlayNext -> {PlayNext()}"); }
 
     [ContextMenu("Test/Play/Random")]
-    private void TestRandom() { if (TestPlaying()) TLog($"PlayRandom ? {PlayRandom()}"); }
+    private void TestRandom() { if (TestPlaying()) TLog($"PlayRandom -> {PlayRandom()}"); }
 
     [ContextMenu("Test/Play/First available")]
-    private void TestFirst() { if (TestPlaying()) TLog($"PlayFirstAvailable ? {PlayFirstAvailable()}"); }
+    private void TestFirst() { if (TestPlaying()) TLog($"PlayFirstAvailable -> {PlayFirstAvailable()}"); }
 
     [ContextMenu("Test/Play/Highest priority")]
-    private void TestPriority() { if (TestPlaying()) TLog($"PlayHighestPriority ? {PlayHighestPriority()}"); }
+    private void TestPriority() { if (TestPlaying()) TLog($"PlayHighestPriority -> {PlayHighestPriority()}"); }
 
     [ContextMenu("Test/Play/By TestKey")]
-    private void TestByKey() { if (TestPlaying()) TLog($"Play('{TestKey}') ? {Play(TestKey)}"); }
+    private void TestByKey() { if (TestPlaying()) TLog($"Play('{TestKey}') -> {Play(TestKey)}"); }
+
+    [ContextMenu("Test/Play/By TestKey (only if available)")]
+    private void TestByKeyIfAvailable() { if (TestPlaying()) TLog($"PlayIfAvailable('{TestKey}') -> {PlayIfAvailable(TestKey)}"); }
 
     [ContextMenu("Test/Play/Interrupt with TestKey")]
-    private void TestInterruptKey() { if (TestPlaying()) TLog($"Interrupt('{TestKey}') ? {Interrupt(TestKey)}"); }
+    private void TestInterruptKey() { if (TestPlaying()) TLog($"Interrupt('{TestKey}') -> {Interrupt(TestKey)}"); }
 
     [ContextMenu("Test/Play/Database dialogue (TestDialogueName)")]
-    private void TestRaw() { if (TestPlaying()) TLog($"PlayDialogue('{TestDialogueName}') ? {PlayDialogue(TestDialogueName)}"); }
+    private void TestRaw() { if (TestPlaying()) TLog($"PlayDialogue('{TestDialogueName}') -> {PlayDialogue(TestDialogueName)}"); }
+
+    [ContextMenu("Test/Play/Replay last")]
+    private void TestReplay() { if (TestPlaying()) TLog($"Replay -> {Replay()}"); }
 
     [ContextMenu("Test/Play/After TestDelay")]
     private void TestAfter() { if (!TestPlaying()) return; PlayAfter(TestDelay); TLog($"Play() in {TestDelay}s"); }
@@ -648,18 +952,21 @@ public class StoryCommander : MonoBehaviour
     {
         if (!TestPlaying()) return;
         Translator.Set("commander.demo.1", "Hello {player}! This story was built by a StoryCommander.");
-        Translator.Set("commander.demo.2", "Today is day {day}.");
-        TLog($"PlayLines ? {PlayLines("Commander.Demo", ("Ann", "commander.demo.1"), ("Ann", "commander.demo.2"))}");
+        Translator.Set("commander.demo.2", "Today is day {day}. You have {money} coins and {energy} energy.");
+        TLog($"PlayLines -> {PlayLines("Commander.Demo", ("Ann", "commander.demo.1"), ("Ann", "commander.demo.2"))}");
     }
 
     [ContextMenu("Test/Control/Stop")]
     private void TestStop() { if (TestPlaying()) Stop(); }
 
     [ContextMenu("Test/Control/Next")]
-    private void TestNext() { if (TestPlaying()) TLog($"Next ? {Next()}"); }
+    private void TestNext() { if (TestPlaying()) TLog($"Next -> {Next()}"); }
 
     [ContextMenu("Test/Control/Reset progress")]
     private void TestReset() { ResetProgress(); TLog("Progress reset."); }
+
+    [ContextMenu("Test/Control/Refresh buttons")]
+    private void TestRefreshButtons() { RefreshButtons(); TLog("Buttons refreshed."); }
 
     [ContextMenu("Test/Info/List entries")]
     private void TestList()
@@ -669,7 +976,9 @@ public class StoryCommander : MonoBehaviour
         for (int i = 0; i < Entries.Count; i++)
         {
             StoryEntry e = Entries[i];
-            if (e != null) TLog($"   [{i}] {e}  available: {e.IsAvailable()}  played: {e.PlayCount}");
+            if (e == null) continue;
+            string why = e.WhyUnavailable();
+            TLog($"   [{i}] {e}  available: {why == null}{(why != null ? " (" + why + ")" : "")}  played: {e.PlayCount}");
         }
     }
 
@@ -677,8 +986,10 @@ public class StoryCommander : MonoBehaviour
     private void TestState()
     {
         if (!TestPlaying()) return;
+        PlayerData data = PlayerManager.Instance != null ? PlayerManager.Instance.Data : null;
+        string player = data != null ? $"Day {data.Day}, Energy {data.Energy}/{data.MaxEnergy}, Money {data.Money}" : "no PlayerData";
         TLog($"Mode: {PickMode}/{EndOfList}  Busy: {Busy}  Cursor: {_cursor}  Active: {_active.Count}  Playing: {IsPlaying}  " +
-             $"Teller: {(Teller != null ? "ok" : "missing")}");
+             $"Teller: {(Teller != null ? "ok" : "missing")}  Player: {player}");
     }
     #endregion
 }

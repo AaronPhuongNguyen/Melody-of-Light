@@ -657,8 +657,8 @@ GameObject:
   m_Component:
   - component: {fileID: 526575011}
   - component: {fileID: 526575013}
-  - component: {fileID: 526575014}
   - component: {fileID: 526575015}
+  - component: {fileID: 526575016}
   m_Layer: 5
   m_Name: Go out
   m_TagString: Untagged
@@ -732,26 +732,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &526575014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 526575010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd80800e2dace1c409d6afcc8b1448fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action: 0
-  sceneName: City
-  sceneIndex: 0
-  mode: 0
-  setActiveScene: 0
-  wrap: 1
-  autoBindButton: 1
-  loadOnStart: 0
 --- !u!114 &526575015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,6 +759,27 @@ MonoBehaviour:
   fade: -1
   seekSeconds: 0
   crossfadeSeconds: 1.5
+--- !u!114 &526575016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526575010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0745bcbad4e679c43821025e9066e1cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: 0
+  sceneName: City
+  sceneIndex: 0
+  mode: 0
+  setActiveScene: 0
+  wrap: 1
+  autoBindButton: 1
+  loadOnStart: 0
+  _button: {fileID: 0}
 --- !u!1 &531682788
 GameObject:
   m_ObjectHideFlags: 0
@@ -2198,6 +2199,7 @@ MonoBehaviour:
   wrap: 1
   autoBindButton: 1
   loadOnStart: 0
+  _button: {fileID: 0}
 --- !u!1 &1714651330
 GameObject:
   m_ObjectHideFlags: 0

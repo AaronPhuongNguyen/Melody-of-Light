@@ -33,7 +33,7 @@ public class LoadingManagerUser : MonoBehaviour
     [SerializeField] private bool autoBindButton = true;
     [SerializeField] private bool loadOnStart;
 
-    private Button _button;
+    [HideInInspector] public Button _button;
 
     private void Awake()
     {
